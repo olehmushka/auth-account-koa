@@ -1,0 +1,41 @@
+openapi: "3.0.0"
+
+info:
+  description: This package defines the Audit service.
+  title: Audit Service
+  version: 1.0.0
+
+paths:
+  /auth/sign-up:
+    post:
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      tags:
+        - auth
+      operationId: PostSignUp
+      parameters: 
+        - description: Input data for new user
+          name: body
+          in: body
+          content: 
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/SignUpUser"
+
+components:
+  schemas:
+    SignUpUser:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string

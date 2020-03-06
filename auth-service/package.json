@@ -1,0 +1,45 @@
+{
+  "name": "auth-service-auth-account-koa",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "build": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version && tsc --pretty",
+    "clean": "rimraf dist",
+    "lint": "tslint --force --format verbose \"src/**/*.ts\"",
+    "start": "yarn run build && yarn run serve",
+    "start:dev": "yarn run build && yarn run serve:dev",
+    "start:prod": "yarn run build && yarn run serve:pm2-runtime",
+    "serve": "node ./dist/main.js",
+    "serve:pm2": "npx pm2 start pm2.yml",
+    "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
+    "stop": "npx pm2 stop all",
+    "watch": "yarn run build -- --watch",
+    "convert": "api-spec-converter --from=openapi_3 --to=swagger_2 --syntax=yaml --order=k8s/openapi.yml asd > swagger2.yml"
+  },
+  "author": "Oleh Mushka<olegamysk@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/koa": "^2.11.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.0",
+    "@types/node": "^9.3.0"
+  },
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "@manifoldco/swagger-to-ts": "^1.7.0",
+    "api-spec-converter": "^2.11.0",
+    "koa": "2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
+    "koa-oas3": "^0.18.0",
+    "pm2": "^3.0.2",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.0.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.8.3"
+  }
+}
