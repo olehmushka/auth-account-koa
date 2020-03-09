@@ -1,0 +1,81 @@
+openapi: "3.0.0"
+
+info:
+  description: This package defines the Audit service.
+  title: Audit Service
+  version: 1.0.0
+  license:
+    name: MIT
+
+paths:
+  "/auth/sign-up":
+    post:
+      summary: Create a user
+      operationId: createUser
+      tags:
+      - auth
+      requestBody:
+        description: The user information
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SignUpUser"
+        required: true
+      responses:
+        '201':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+                
+components:
+  schemas:
+    SignUpUser:
+      required:
+      - username
+      - email
+      - password
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    User:
+      required:
+        - username
+        - email
+        - id
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        id:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    Users:
+      type: array
+      items:
+        "$ref": "#/components/schemas/User"
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

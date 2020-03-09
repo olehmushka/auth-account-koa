@@ -14,7 +14,11 @@
     "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
     "stop": "npx pm2 stop all",
     "watch": "yarn run build -- --watch",
-    "convert": "api-spec-converter --from=openapi_3 --to=swagger_2 --syntax=yaml --order=k8s/openapi.yml asd > swagger2.yml"
+    "generate:spec": "yarn clean:swagger2 && yarn generate:swagger2 && yarn clean:models && yarn generate:models",
+    "generate:models": "npx @manifoldco/swagger-to-ts k8s/swagger2.yml --wrapper \"export namespace API\" --camelcase -o src/models/models.d.ts",
+    "clean:models": "rimraf src/models/models.d.ts",
+    "generate:swagger2": "api-spec-converter --from=openapi_3 --to=swagger_2 --syntax=yaml --order=alpha k8s/openapi.yml > k8s/swagger2.yml",
+    "clean:swagger2": "rimraf k8s/swagger2.yml"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
@@ -22,20 +26,23 @@
   "devDependencies": {
     "@types/koa": "^2.11.2",
     "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-convert": "^1.2.3",
     "@types/koa-json": "^2.0.18",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.0",
     "@types/node": "^9.3.0"
   },
   "dependencies": {
-    "@koa/router": "^8.0.8",
     "@manifoldco/swagger-to-ts": "^1.7.0",
     "api-spec-converter": "^2.11.0",
     "koa": "2.11.0",
+    "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
+    "koa-convert": "^1.2.0",
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",
     "koa-oas3": "^0.18.0",
+    "koa-router": "^8.0.8",
     "pm2": "^3.0.2",
     "rimraf": "^2.6.2",
     "tslint": "^5.0.0",
