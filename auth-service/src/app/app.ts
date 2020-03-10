@@ -1,8 +1,8 @@
 import Router from 'koa-router';
-import { authRouter } from './auth';
+import { getAuthRouter } from './auth';
 
-const app = new Router();
+const getApp = () =>
+  new Router()
+    .use('/auth', getAuthRouter().routes());
 
-app.use('/auth', authRouter.routes());
-
-export { app };
+export { getApp };

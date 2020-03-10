@@ -31,7 +31,8 @@
     "@types/koa-json": "^2.0.18",
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.4.0",
-    "@types/node": "^9.3.0"
+    "@types/node": "^9.3.0",
+    "@types/redis": "^2.8.16"
   },
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
@@ -47,6 +48,7 @@
     "koa-oas3": "^0.18.0",
     "koa-router": "^8.0.8",
     "pm2": "^3.0.2",
+    "redis": "^3.0.2",
     "rimraf": "^2.6.2",
     "tslint": "^5.0.0",
     "tslint-config-airbnb": "^5.11.2",

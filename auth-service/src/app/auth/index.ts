@@ -1,8 +1,10 @@
 import Router from 'koa-router';
-import { signUpHandler } from './sign-up.handler';
+import { getSignUpHandler } from './sign-up.handler';
 
-const authRouter = new Router();
+const getAuthRouter = (): Router =>
+  new Router()
+    .post('/sign-up', getSignUpHandler());
 
-authRouter.post('/sign-up', signUpHandler);
-
-export { authRouter };
+export {
+  getAuthRouter,
+};
