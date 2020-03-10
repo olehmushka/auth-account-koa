@@ -20,7 +20,6 @@ server.use(logger());
 server.use(validate(`${__dirname}/../k8s/openapi.yml`));
 
 const dbClient = getPgClient();
-dbClient.createConnection();
 const redisClient = getRedisClient();
 const app = getApp(dbClient, redisClient);
 server.use(app.routes());
