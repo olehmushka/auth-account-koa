@@ -1,8 +1,7 @@
 import * as redis from 'redis';
+import { REDIS_HOST } from '../../config';
 
-export const redisHost = 'redis://redis-service';
-
-export const getClient = () => new RedisService(redis.createClient(redisHost));
+export const getRedisClient = () => new RedisService(redis.createClient(REDIS_HOST));
 
 export class RedisService {
   private client: redis.RedisClient;

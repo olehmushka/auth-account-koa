@@ -12,6 +12,11 @@ services:
   auth-service:
     build:
       context: ./auth-service
+    depends_on:
+      - db-service
+    environment:
+      DATABASE_URL: postgres://user:pass@db-service:5432/db
+      REDIS_HOST: redis://redis-service
     expose:
       - 3000
   redis-service:
@@ -21,5 +26,17 @@ services:
       - ./storage/redis/data:/data
     expose:
       - 6379
+    logging:
+      driver: none
+  db-service:
+    image: postgres:10.4
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    volumes:
+      - ./storage/postgresql/data:/var/lib/postgresql/data
     logging:
       driver: none
