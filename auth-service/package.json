@@ -36,6 +36,7 @@
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
     "api-spec-converter": "^2.11.0",
+    "http-status": "^1.4.2",
     "koa": "2.11.0",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
