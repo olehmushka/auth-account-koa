@@ -8,6 +8,9 @@
     "import-name": {
       "severity": "off"
     },
+    "prefer-array-literal": {
+      "severity": "off"
+    },
     "semicolon": [
       true,
       "always"

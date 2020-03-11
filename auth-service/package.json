@@ -18,7 +18,11 @@
     "generate:models": "npx @manifoldco/swagger-to-ts k8s/swagger2.yml --wrapper \"export namespace API\" --camelcase -o src/models/models.d.ts",
     "clean:models": "rimraf src/models/models.d.ts",
     "generate:swagger2": "api-spec-converter --from=openapi_3 --to=swagger_2 --syntax=yaml --order=alpha k8s/openapi.yml > k8s/swagger2.yml",
-    "clean:swagger2": "rimraf k8s/swagger2.yml"
+    "clean:swagger2": "rimraf k8s/swagger2.yml",
+    "db:create-migration": "npx bash ./scripts/make_migration.sh",
+    "db:run-migration": "npx bash ./scripts/run_migration.sh",
+    "db:create-seed": "npx bash ./scripts/make_seed.sh",
+    "db:run-seed": "npx bash ./scripts/run_seed.sh"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
@@ -35,7 +39,8 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^9.3.0",
     "@types/pg": "^7.14.1",
-    "@types/redis": "^2.8.16"
+    "@types/redis": "^2.8.16",
+    "@types/uuid": "^7.0.0"
   },
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
@@ -58,6 +63,7 @@
     "rimraf": "^2.6.2",
     "tslint": "^5.0.0",
     "tslint-config-airbnb": "^5.11.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uuid": "^7.0.2"
   }
 }

@@ -3,7 +3,13 @@ import get from 'lodash/get';
 
 export const urlParse = (url: string): URL => new URL(url);
 
-export interface DbConfig {}
+export interface DbConfig {
+  user: string;
+  database: string;
+  password: string;
+  host: string;
+  port: number;
+}
 
 export const dbUrlParse = (url: string): DbConfig => {
   const parsed = urlParse(url);
