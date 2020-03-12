@@ -19,12 +19,12 @@ module.exports = {
       max: configs.MAX_NUMBER_OF_CLIENTS_IN_DB_POOL,
     },
     migrations: {
-      directory: './migrations',
+      directory: `${__dirname}/migrations/`,
       extension: 'ts',
       tableName: 'knex_migrations',
     },
     seeds: {
-      directory: './seeds',
+      directory: `${__dirname}/seeds/`,
     },
   },
 };

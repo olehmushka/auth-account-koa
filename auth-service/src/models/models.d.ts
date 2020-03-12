@@ -4,20 +4,24 @@
  */
 
 export namespace API {
-  export interface User {
-    email: string;
-    id: string;
-    roles?: string[];
-    username: string;
-  }
   export interface SignUpUser {
     email: string;
+    firstName: string;
+    lastName: string;
     password: string;
-    roles?: string[];
+    role?: string;
+    username: string;
+  }
+  export interface SafeUser {
+    email: string;
+    firstName: string;
+    id: string;
+    lastName: string;
+    role?: string;
     username: string;
   }
   export interface Error {
-    code: number;
+    errors: string[];
     message: string;
   }
 }

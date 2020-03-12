@@ -9,16 +9,6 @@ services:
       - '80:80'
     links:
       - auth-service
-  auth-service:
-    build:
-      context: ./auth-service
-    depends_on:
-      - db-service
-    environment:
-      DATABASE_URL: postgres://user:pass@db-service:5432/db
-      REDIS_HOST: redis://redis-service
-    expose:
-      - 3000
   redis-service:
     image: redis
     restart: always
@@ -40,3 +30,13 @@ services:
       - ./storage/postgresql/data:/var/lib/postgresql/data
     logging:
       driver: none
+  auth-service:
+    build:
+      context: ./auth-service
+    depends_on:
+      - db-service
+    environment:
+      DATABASE_URL: postgres://user:pass@db-service:5432/db
+      REDIS_HOST: redis://redis-service
+    expose:
+      - 3000

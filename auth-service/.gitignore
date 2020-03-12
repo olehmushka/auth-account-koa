@@ -65,3 +65,6 @@ dist/**/*
 
 # Ignore reports folder
 reports
+
+# generated swagger2.yml
+k8s/swagger2.yml

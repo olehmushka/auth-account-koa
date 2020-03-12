@@ -13,6 +13,17 @@ export class PgService {
     }));
   }
 
+  public insert(tableName: string, values: any[]): Promise<any> {
+    return this.client(tableName).insert(values);
+  }
+
+  public select(tableName: string, limit?: number, skip?: number): Promise<any> {
+    return this.client(tableName).select('*')
+      .from(tableName)
+      .limit(limit)
+      .offset(skip);
+  }
+
   public query(queryText: string, values?: any[]): Promise<any> {
     return this.client.raw(queryText, values);
   }

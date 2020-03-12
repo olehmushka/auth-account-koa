@@ -20,9 +20,9 @@ const generateUsers = (numUsers: number) => {
   return users;
 };
 
-export const seed = async(knex: Knex): Promise<any> => {
+export async function seed(knex: Knex): Promise<any> {
   return knex('users').del()
     .then(() => {
       return knex('users').insert(generateUsers(10));
     });
-};
+}

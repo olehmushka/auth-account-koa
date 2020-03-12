@@ -13,7 +13,7 @@ paths:
       summary: Create a user
       operationId: createUser
       tags:
-      - auth
+      - user
       requestBody:
         description: The user information
         content:
@@ -30,6 +30,34 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Error"
+  "/users":
+    get:
+      summary: Get users
+      operationId: getUsers
+      tags:
+      - user
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: skip
+          in: query
+          description: How many items should be skipped
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of users
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/SaveUsers"
                 
 components:
   schemas:
@@ -37,45 +65,54 @@ components:
       required:
       - username
       - email
+      - firstName
+      - lastName
       - password
       properties:
         username:
           type: string
         email:
           type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
         password:
           type: string
-        roles:
-          type: array
-          items:
-            type: string
-    User:
+        role:
+          type: string
+    SafeUser:
       required:
         - username
         - email
+        - firstName
+        - lastName
         - id
       properties:
         username:
           type: string
         email:
           type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
         id:
           type: string
-        roles:
+        role:
+          type: string
+    SaveUsers:
+      type: array
+      items:
+        "$ref": "#/components/schemas/SafeUser"
+    Error:
+      required:
+      - errors
+      - message
+      properties:
+        errors:
           type: array
           items:
             type: string
-    Users:
-      type: array
-      items:
-        "$ref": "#/components/schemas/User"
-    Error:
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: integer
-          format: int32
         message:
           type: string

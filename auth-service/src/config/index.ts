@@ -1,6 +1,7 @@
 export const PORT = 3000;
 
 export const DB_URL: string = process.env.DATABASE_URL || '';
+// export const DB_URL: string = 'postgres://user:pass@localhost:5432/db';
 export const MAX_NUMBER_OF_CLIENTS_IN_DB_POOL = 10;
 export const IDLE_TIMOUT_MILLIS_IN_DB = 30000;
 
@@ -11,6 +12,6 @@ export const initConfigs = () => {
     throw new Error('DATABASE_URL is not initialized');
   }
   if (!REDIS_HOST) {
-    throw new Error('DATABASE_URL is not initialized');
+    throw new Error('REDIS_HOST is not initialized');
   }
 };

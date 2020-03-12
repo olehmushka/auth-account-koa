@@ -20,7 +20,14 @@
         "allow-leading-underscore",
         "allow-pascal-case"
       ]
-    }
+    },
+    "max-line-length": [
+      true, 
+      {
+        "limit": 120, 
+        "ignore-pattern": "^import [^,]+ from |^export | implements"
+      }
+    ]
   },
   "rulesDirectory": []
 }
