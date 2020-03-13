@@ -3,6 +3,12 @@ import * as config from '../../config';
 
 export const getPgClient = () => new PgService(config.DB_URL);
 
+interface SelectOptions {
+  limit?: number;
+  skip?: number;
+  where?: object;
+}
+
 export class PgService {
   private client: any;
   constructor(dbUrl: string) {
@@ -17,11 +23,13 @@ export class PgService {
     return this.client(tableName).insert(values);
   }
 
-  public select(tableName: string, limit?: number, skip?: number): Promise<any> {
-    return this.client(tableName).select('*')
-      .from(tableName)
-      .limit(limit)
-      .offset(skip);
+  public select(tableName: string, options?: SelectOptions): Promise<any> {
+    return !options
+      ? this.client(tableName).select('*').from(tableName)
+      : this.client(tableName).select('*').from(tableName)
+        .where(options.where || {})
+        .limit(options.limit)
+        .offset(options.skip);
   }
 
   public query(queryText: string, values?: any[]): Promise<any> {

@@ -12,7 +12,8 @@ export const getSignUpHandler = (
   async (ctx: Context, next: Next): Promise<void> => {
     try {
       const user = ctx.request.body as models.SignUpUser;
-      ctx.body = await storeService.create(user);
+      const savedUser = await storeService.create(user);
+      ctx.body = { data: savedUser } as models.SignUpUserResponse;
       ctx.status = status.OK;
       await next();
     } catch (err) {

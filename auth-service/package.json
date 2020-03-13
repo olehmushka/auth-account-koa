@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "build": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version && tsc --pretty",
+    "build": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
     "clean": "rimraf dist",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "start": "yarn run build && yarn run serve",
@@ -24,13 +24,16 @@
     "db:run-migration": "npx bash ./scripts/run_migration.sh",
     "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
     "db:create-seed": "npx bash ./scripts/make_seed.sh",
-    "db:run-seed": "npx bash ./scripts/run_seed.sh"
+    "db:run-seed": "npx bash ./scripts/run_seed.sh",
+    "crypto:generate-rs256-key": "npx bash ./scripts/make_rs256_key.sh",
+    "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
   "private": false,
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/knex": "^0.16.1",
     "@types/koa": "^2.11.2",
     "@types/koa-bodyparser": "^4.3.0",
@@ -50,6 +53,7 @@
     "api-spec-converter": "^2.11.0",
     "bcrypt": "^4.0.1",
     "http-status": "^1.4.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.11",
     "koa": "2.11.0",
     "koa-body": "^4.1.1",

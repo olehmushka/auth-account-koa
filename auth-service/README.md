@@ -18,6 +18,10 @@ Microservice of mock project with examples of usage different instruments of dev
 
 `yarn db:run-migration`
 
+## Run all migrations
+
+`yarn db:run-all-migrations`
+
 ## Create seed
 
 `yarn db:create-seed <seed_name>`
@@ -33,3 +37,9 @@ Microservice of mock project with examples of usage different instruments of dev
 ## Create models from swagger file
 
 `yarn generate:spec`
+
+## Generate *.key file for jwt
+
+It will move these files(*.key and *.key.pub) to src/lib/crypto/ directory
+
+`yarn crypto:generate-rs256-key`

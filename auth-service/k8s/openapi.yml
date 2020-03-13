@@ -22,14 +22,45 @@ paths:
               "$ref": "#/components/schemas/SignUpUser"
         required: true
       responses:
-        '201':
-          description: Null response
+        "201":
+          description: Saved user
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SignUpUserResponse"
         default:
           description: unexpected error
           content:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Error"
+  "/auth/sign-in":
+    post:
+      summary: Sign In with credentials
+      operationId: signInAuth
+      tags:
+      - auth
+      requestBody:
+        description: The user's credentials
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SignInUser"
+        required: true
+      responses:
+        "200":
+          description: Successfully signed in
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/SignInUserResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+
   "/users":
     get:
       summary: Get users
@@ -61,6 +92,17 @@ paths:
                 
 components:
   schemas:
+    UserId:
+      type: string
+      format: uuid
+    UserEmail:
+      type: string
+      format: email
+    UserPassword:
+      type: string
+      format: password
+      minLength: 6
+      maxLength: 20
     UserRole:
       type: string
       enum: [ADMIN, USER, GUEST]
@@ -71,22 +113,48 @@ components:
         - email
         - firstName
         - lastName
+        - password
         - role
       properties:
         id:
-          type: string
+          "$ref": "#/components/schemas/UserId"
         username:
           type: string
         email:
-          type: string
+          "$ref": "#/components/schemas/UserEmail"
         firstName:
           type: string
         lastName:
           type: string
         password:
+          "$ref": "#/components/schemas/UserPassword"
+        role:
+          "$ref": "#/components/schemas/UserRole"
+    SafeUser:
+      required:
+        - id
+        - username
+        - email
+        - firstName
+        - lastName
+      properties:
+        id:
+          "$ref": "#/components/schemas/UserId"
+        username:
+          type: string
+        email:
+          "$ref": "#/components/schemas/UserEmail"
+        firstName:
+          type: string
+        lastName:
           type: string
         role:
-          type: string
+          "$ref": "#/components/schemas/UserRole"
+    SaveUsers:
+      type: array
+      items:
+        "$ref": "#/components/schemas/SafeUser"
+
     SignUpUser:
       required:
       - username
@@ -99,39 +167,42 @@ components:
         username:
           type: string
         email:
-          type: string
+          "$ref": "#/components/schemas/UserEmail"
         firstName:
           type: string
         lastName:
           type: string
         password:
-          type: string
+          "$ref": "#/components/schemas/UserPassword"
         role:
           "$ref": "#/components/schemas/UserRole"
-    SafeUser:
+    SignUpUserResponse:
       required:
-        - username
-        - email
-        - firstName
-        - lastName
-        - id
+      - data
+      properties:
+        data:
+          "$ref": "#/components/schemas/SafeUser"
+
+    SignInUser:
+      required:
+      - username
+      - password
       properties:
         username:
           type: string
-        email:
-          type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        id:
-          type: string
-        role:
-          "$ref": "#/components/schemas/UserRole"
-    SaveUsers:
-      type: array
-      items:
-        "$ref": "#/components/schemas/SafeUser"
+        password:
+          "$ref": "#/components/schemas/UserPassword"
+    SignInUserResponse:
+      required:
+      - data
+      properties:
+        data:
+          required:
+          - authToken
+          properties:
+            authToken:
+              type: string
+
     Error:
       required:
       - errors
