@@ -42,6 +42,7 @@ export class AuthUserService {
     const dataForToken: TokenData = { userId, role };
     try {
       const token = await sign(JSON.stringify(dataForToken));
+      await this.session.createSession(userId, token);
       return token;
     } catch (err) {
       return err.message

@@ -1,0 +1,23 @@
+digraph {
+  label = "Auth Account Koa Architecture"
+
+  // Proxy Servers
+  node [shape=ellipse style= filled,fillcolor=lightblue,color=black];"nginx-server";
+  // backend services
+  node [shape=ellipse style=filled,fillcolor=khaki1,color=black]; "auth-api";
+  // storage
+  node [shape=cylinder style=filled, fillcolor=lightgrey, color=black]; "auth-store"; "session-store";
+
+  subgraph cluster_auth {
+    style="dashed"
+    label="Auth"
+    "auth-api" -> "auth-store"
+    "auth-api" -> "session-store"
+  }
+
+  subgraph cluster_nginx {
+    style="dashed"
+    label="Nginx Server"
+    "nginx-server" -> "auth-api"
+  }
+}
