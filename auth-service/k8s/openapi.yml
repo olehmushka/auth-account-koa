@@ -61,14 +61,20 @@ paths:
                 
 components:
   schemas:
-    SignUpUser:
+    UserRole:
+      type: string
+      enum: [ADMIN, USER, GUEST]
+    FullUser:
       required:
-      - username
-      - email
-      - firstName
-      - lastName
-      - password
+        - id
+        - username
+        - email
+        - firstName
+        - lastName
+        - role
       properties:
+        id:
+          type: string
         username:
           type: string
         email:
@@ -81,6 +87,27 @@ components:
           type: string
         role:
           type: string
+    SignUpUser:
+      required:
+      - username
+      - email
+      - firstName
+      - lastName
+      - password
+      - role
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+        role:
+          "$ref": "#/components/schemas/UserRole"
     SafeUser:
       required:
         - username
@@ -100,7 +127,7 @@ components:
         id:
           type: string
         role:
-          type: string
+          "$ref": "#/components/schemas/UserRole"
     SaveUsers:
       type: array
       items:

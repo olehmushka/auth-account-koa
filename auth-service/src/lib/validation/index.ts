@@ -2,6 +2,7 @@ import { Context, Next, Middleware } from 'koa';
 import { oas } from 'koa-oas3';
 import compose from 'koa-compose';
 import { API } from '../../models/models';
+import { _ } from '../../utils';
 
 interface Suggestion {
   error: string;
@@ -14,14 +15,16 @@ interface ValidationError {
   suggestions: Suggestion[];
 }
 
-export const getErrorResponse = (err: { message: string }, messages?: string[]): API.Error => {
+export const getErrorResponse = (err: { message: string } | string, messages?: string[]): API.Error => {
   const res = {
-    message: err.message,
+    message: _.get(err, 'message', err),
     errors: [],
   } as API.Error;
+
   if (messages) {
     res.errors = messages;
   }
+
   return res;
 };
 

@@ -9,7 +9,7 @@ export namespace API {
     firstName: string;
     lastName: string;
     password: string;
-    role?: string;
+    role: string;
     username: string;
   }
   export interface SafeUser {
@@ -18,6 +18,15 @@ export namespace API {
     id: string;
     lastName: string;
     role?: string;
+    username: string;
+  }
+  export interface FullUser {
+    email: string;
+    firstName: string;
+    id: string;
+    lastName: string;
+    password?: string;
+    role: string;
     username: string;
   }
   export interface Error {

@@ -8,7 +8,7 @@ export const getGetAllUsersHandler = (getUserService: GetUserService): Middlewar
   async (ctx: Context, next: Next) => {
     try {
       const { limit, skip } = ctx.request.query;
-      ctx.body = await getUserService.getBatch(limit, skip);
+      ctx.body = await getUserService.getSaveBalk(limit, skip);
       ctx.status = status.OK;
       await next();
     } catch (err) {

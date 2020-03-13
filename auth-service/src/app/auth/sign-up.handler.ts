@@ -9,11 +9,10 @@ export const getSignUpHandler = (
   storeService: StoreUserService,
   redisClient: RedisService,
 ): Middleware =>
-  async (ctx: Context, next: Next) => {
+  async (ctx: Context, next: Next): Promise<void> => {
     try {
-      const data = ctx.request.body as models.SignUpUser;
-      await storeService.create(data);
-      ctx.body = data;
+      const user = ctx.request.body as models.SignUpUser;
+      ctx.body = await storeService.create(user);
       ctx.status = status.OK;
       await next();
     } catch (err) {

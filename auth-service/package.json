@@ -12,6 +12,7 @@
     "serve": "node ./dist/main.js",
     "serve:pm2": "npx pm2 start pm2.yml",
     "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
+    "serve:dev": "npx nodemon --inspect ./dist/main.js",
     "stop": "npx pm2 stop all",
     "watch": "yarn run build -- --watch",
     "generate:spec": "yarn clean:swagger2 && yarn generate:swagger2 && yarn clean:models && yarn generate:models && yarn clean:swagger2",
@@ -29,6 +30,7 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/knex": "^0.16.1",
     "@types/koa": "^2.11.2",
     "@types/koa-bodyparser": "^4.3.0",
@@ -46,6 +48,7 @@
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
     "api-spec-converter": "^2.11.0",
+    "bcrypt": "^4.0.1",
     "http-status": "^1.4.2",
     "knex": "^0.20.11",
     "koa": "2.11.0",
