@@ -10,7 +10,8 @@ const generateUsers = (numUsers: number) => {
     users[i] = {
       id,
       username,
-      roles: allRoles[Math.floor(Math.random() * (allRoles.length - 1) + 1) - 1],
+      roles:
+        allRoles[Math.floor(Math.random() * (allRoles.length - 1) + 1) - 1],
       email: `${username}@mail.com`,
       first_name: `fn_${i}`,
       last_name: `ln_${i}`,
@@ -21,7 +22,8 @@ const generateUsers = (numUsers: number) => {
 };
 
 export async function seed(knex: Knex): Promise<any> {
-  return knex('users').del()
+  return knex('users')
+    .del()
     .then(() => {
       return knex('users').insert(generateUsers(10));
     });

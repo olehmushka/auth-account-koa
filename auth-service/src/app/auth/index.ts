@@ -7,13 +7,20 @@ import { getSessionService } from '../../lib/session';
 import { getStoreUserService } from './store.user.service';
 import { getAuthUserService } from './auth.user.service';
 
-const getAuthRouter = (dbClient: PgService, redisClient: RedisService): Router =>
+const getAuthRouter = (
+  dbClient: PgService,
+  redisClient: RedisService,
+): Router =>
   new Router()
-    .post('/sign-up', getSignUpHandler(getStoreUserService(dbClient), redisClient))
-    .post('/sign-in', getSignInHandler(
+    .post(
+      '/sign-up',
+      getSignUpHandler(getStoreUserService(dbClient), redisClient),
+    )
+    .post(
+      '/sign-in',
+      getSignInHandler(
         getAuthUserService(dbClient, getSessionService(redisClient)),
-      ));
+      ),
+    );
 
-export {
-  getAuthRouter,
-};
+export { getAuthRouter };

@@ -22,12 +22,9 @@ export class StoreUserService extends BaseUser {
 
       return this.filterFullUser(fullUser, ['password']);
     } catch (err) {
-      return err.message
-        ? Promise.reject(err.message)
-        : Promise.reject(err);
+      return err.message ? Promise.reject(err.message) : Promise.reject(err);
     }
   }
 }
 
-export const getStoreUserService = (db: PgService) =>
-  new StoreUserService(db);
+export const getStoreUserService = (db: PgService) => new StoreUserService(db);

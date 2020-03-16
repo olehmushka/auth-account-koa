@@ -14,12 +14,10 @@ export class AuthUserService {
     try {
       const data = await verify(authToken);
       return _.isString(data)
-        ? JSON.parse(data) as TokenData
-        : data as TokenData;
+        ? (JSON.parse(data) as TokenData)
+        : (data as TokenData);
     } catch (err) {
-      return err.message
-        ? Promise.reject(err.message)
-        : Promise.reject(err);
+      return err.message ? Promise.reject(err.message) : Promise.reject(err);
     }
   }
 }

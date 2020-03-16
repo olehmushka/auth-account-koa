@@ -15,7 +15,10 @@ interface ValidationError {
   suggestions: Suggestion[];
 }
 
-export const getErrorResponse = (err: { message: string } | string, messages?: string[]): API.Error => {
+export const getErrorResponse = (
+  err: { message: string } | string,
+  messages?: string[],
+): API.Error => {
   const res = {
     message: _.get(err, 'message', err),
     errors: [],
@@ -30,13 +33,16 @@ export const getErrorResponse = (err: { message: string } | string, messages?: s
 
 export const validate = (openApiPath: string): Middleware =>
   compose([
-    async(ctx: Context, next: Next): Promise<void> => {
+    async (ctx: Context, next: Next): Promise<void> => {
       try {
         await next();
       } catch (err) {
         const { suggestions = [], code } = err as ValidationError;
         ctx.status = code;
-        ctx.body = getErrorResponse(err, suggestions.map(({ error }: Suggestion) => error));
+        ctx.body = getErrorResponse(
+          err,
+          suggestions.map(({ error }: Suggestion) => error),
+        );
       }
     },
     oas({

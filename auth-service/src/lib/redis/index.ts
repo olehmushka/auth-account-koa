@@ -1,7 +1,8 @@
 import * as redis from 'redis';
 import { REDIS_HOST } from '../../config';
 
-export const getRedisClient = () => new RedisService(redis.createClient(REDIS_HOST));
+export const getRedisClient = () =>
+  new RedisService(redis.createClient(REDIS_HOST));
 
 export class RedisService {
   private client: redis.RedisClient;
@@ -16,12 +17,15 @@ export class RedisService {
 
   public getValue(key: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.client.get(key, (err: Error | undefined | null, value: any): void => {
-        if (err) {
-          reject(err);
-        }
-        resolve(value);
-      });
+      this.client.get(
+        key,
+        (err: Error | undefined | null, value: any): void => {
+          if (err) {
+            reject(err);
+          }
+          resolve(value);
+        },
+      );
     });
   }
 
@@ -38,12 +42,15 @@ export class RedisService {
 
   public delValue(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.client.del(key, (err: Error | undefined | null, value: any): void => {
-        if (err) {
-          reject(err);
-        }
-        resolve(value);
-      });
+      this.client.del(
+        key,
+        (err: Error | undefined | null, value: any): void => {
+          if (err) {
+            reject(err);
+          }
+          resolve(value);
+        },
+      );
     });
   }
 }

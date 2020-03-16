@@ -8,7 +8,10 @@ const PRIVATE_KEY_FILENAME = 'jwtRS256.key';
 const CERTEFICATE_FILENAME = 'jwtRS256.pem';
 const HASH_ALGORITHM = 'RS256';
 
-export const hashString = async (text: string, salt: number = SALT_ROUND): Promise<string> => {
+export const hashString = async (
+  text: string,
+  salt: number = SALT_ROUND,
+): Promise<string> => {
   return new Promise((resolve, reject) => {
     bcrypt.hash(text, salt, (err: Error | undefined, encrypted: string) => {
       if (err) {
@@ -19,7 +22,10 @@ export const hashString = async (text: string, salt: number = SALT_ROUND): Promi
   });
 };
 
-export const compareWithHash = async (text: string, hash: string): Promise<boolean> => {
+export const compareWithHash = async (
+  text: string,
+  hash: string,
+): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     bcrypt.compare(text, hash, (err: Error | undefined, isMatch: boolean) => {
       if (err) {
@@ -53,7 +59,9 @@ export const sign = async (data: string): Promise<string> => {
 export const verify = async (token: string): Promise<string> => {
   try {
     const publicKey = await getFile(CERTEFICATE_FILENAME);
-    return jwt.verify(token, publicKey, { algorithms: [HASH_ALGORITHM] }) as string;
+    return jwt.verify(token, publicKey, {
+      algorithms: [HASH_ALGORITHM],
+    }) as string;
   } catch ({ message }) {
     throw new Error(message);
   }

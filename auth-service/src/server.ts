@@ -30,7 +30,4 @@ const closeConnections = () => {
   redisClient.close();
 };
 
-export {
-  server,
-  closeConnections,
-};
+export { server, closeConnections };

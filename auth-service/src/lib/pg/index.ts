@@ -12,11 +12,11 @@ interface SelectOptions {
 export class PgService {
   private client: any;
   constructor(dbUrl: string) {
-    this.client = knex(({
+    this.client = knex({
       client: 'pg',
       connection: dbUrl,
       pool: { min: 0, max: config.MAX_NUMBER_OF_CLIENTS_IN_DB_POOL },
-    }));
+    });
   }
 
   public insert(tableName: string, values: any[]): Promise<any> {
@@ -25,11 +25,15 @@ export class PgService {
 
   public select(tableName: string, options?: SelectOptions): Promise<any> {
     return !options
-      ? this.client(tableName).select('*').from(tableName)
-      : this.client(tableName).select('*').from(tableName)
-        .where(options.where || {})
-        .limit(options.limit)
-        .offset(options.skip);
+      ? this.client(tableName)
+          .select('*')
+          .from(tableName)
+      : this.client(tableName)
+          .select('*')
+          .from(tableName)
+          .where(options.where || {})
+          .limit(options.limit)
+          .offset(options.skip);
   }
 
   public query(queryText: string, values?: any[]): Promise<any> {

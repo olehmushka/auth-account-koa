@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
+    "format": "npx prettier --write \"src/**/*.ts\"",
     "build": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
     "clean": "rimraf dist",
-    "lint": "tslint --force --format verbose \"src/**/*.ts\"",
+    "lint": "yarn format && tslint --force --format verbose \"src/**/*.ts\"",
     "start": "yarn run build && yarn run serve",
     "start:dev": "yarn run build && yarn run serve:dev",
     "start:prod": "yarn run build && yarn db:run-all-migrations && yarn run serve:pm2-runtime",
@@ -52,7 +53,8 @@
     "@types/uuid": "^7.0.0",
     "jest": "^25.1.0",
     "supertest": "^4.0.2",
-    "ts-jest": "^25.2.1"
+    "ts-jest": "^25.2.1",
+    "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",

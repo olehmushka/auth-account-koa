@@ -8,11 +8,18 @@ export class GetUserService extends BaseUser {
     super();
   }
 
-  public getSaveBalk(limit?: number, skip?: number): Promise<models.SafeUser[]> {
-    return this.db.select(this.tableName, { limit, skip })
-      .then(users => users.map((user: models.FullUser) => this.filterFullUser(user, ['password'])));
+  public getSaveBalk(
+    limit?: number,
+    skip?: number,
+  ): Promise<models.SafeUser[]> {
+    return this.db
+      .select(this.tableName, { limit, skip })
+      .then(users =>
+        users.map((user: models.FullUser) =>
+          this.filterFullUser(user, ['password']),
+        ),
+      );
   }
 }
 
-export const getGetUserService = (db: PgService) =>
-  new GetUserService(db);
+export const getGetUserService = (db: PgService) => new GetUserService(db);

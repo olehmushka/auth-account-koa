@@ -13,14 +13,16 @@ interface TokenData {
 export class AuthUserService {
   private tableName = 'users';
 
-  constructor(
-    private db: PgService,
-    private session: SessionService,
-  ) {}
+  constructor(private db: PgService, private session: SessionService) {}
 
-  public async authenticateUser({ username, password }: models.SignInUser): Promise<models.FullUser> {
+  public async authenticateUser({
+    username,
+    password,
+  }: models.SignInUser): Promise<models.FullUser> {
     try {
-      const users = await this.db.select(this.tableName, { where: { username } });
+      const users = await this.db.select(this.tableName, {
+        where: { username },
+      });
       if (users.length === 0) {
         throw new Error(invalidUsernameErr);
       }
@@ -32,22 +34,21 @@ export class AuthUserService {
       }
       throw new Error(invalidPasswordErr);
     } catch (err) {
-      return err.message
-        ? Promise.reject(err.message)
-        : Promise.reject(err);
+      return err.message ? Promise.reject(err.message) : Promise.reject(err);
     }
   }
 
-  public async createAuthToken({ id: userId, role }: models.FullUser): Promise<string> {
+  public async createAuthToken({
+    id: userId,
+    role,
+  }: models.FullUser): Promise<string> {
     const dataForToken: TokenData = { userId, role };
     try {
       const token = await sign(JSON.stringify(dataForToken));
       await this.session.createSession(userId, token);
       return token;
     } catch (err) {
-      return err.message
-        ? Promise.reject(err.message)
-        : Promise.reject(err);
+      return err.message ? Promise.reject(err.message) : Promise.reject(err);
     }
   }
 }

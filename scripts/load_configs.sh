@@ -3,14 +3,16 @@
 THIS_DIR=$( dirname "${BASH_SOURCE}" )
 . $THIS_DIR/colors.sh
 
-load_configs()
+refreshConfigDir()
 {
   logSection "Delete old config directory..."
   rm -rf auth-account-koa_config
   logSection "Pulling new config directory..."
   git clone https://github.com/olehmushka/auth-account-koa_config.git
+}
 
-  # Move certeficates to Auth Service
+applyCerteficates()
+{
   logSection "Loading pulled certeficates..."
   for file in "$(pwd)/auth-account-koa_config/certeficates"/*
   do
@@ -26,7 +28,10 @@ load_configs()
     mv $(pwd)/auth-account-koa_config/certeficates/$FILENAME $DIST_FILE
     logSection "Moved $FILENAME to $(pwd)/auth-service/src/lib/crypto/ ."
   done
+}
 
+refreshEnvFile()
+{
   ENV=dev
   if [ -n "$1" ]; then
     $ENV=$1
@@ -41,4 +46,11 @@ load_configs()
   rm .env
   logSection "Moving $ENV.env to .env file..."
   mv $PATHNAME .env
+}
+
+load_configs()
+{
+  refreshConfigDir
+  applyCerteficates
+  refreshEnvFile $1
 }

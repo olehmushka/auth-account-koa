@@ -1,7 +1,8 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint-config-airbnb"
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
   ],
   "jsRules": {},
   "rules": {
@@ -27,7 +28,8 @@
         "limit": 120, 
         "ignore-pattern": "^import [^,]+ from |^export | implements"
       }
-    ]
+    ],
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}]
   },
   "rulesDirectory": []
 }

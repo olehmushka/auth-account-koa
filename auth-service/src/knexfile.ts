@@ -4,7 +4,6 @@ import * as utils from './utils';
 const dbConfigs = utils.parser.dbUrlParse(configs.DB_URL);
 
 module.exports = {
-
   development: {
     client: 'postgresql',
     connection: {

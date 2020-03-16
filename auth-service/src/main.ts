@@ -13,9 +13,7 @@ server.on('error', async (err, _ctx) => {
   }
 });
 
-http
-  .createServer(server.callback())
-  .listen(config.PORT, () => {
-    console.log(`App is running at http://localhost:${config.PORT}`);
-    console.log('Press CTRL-C to stop');
-  });
+http.createServer(server.callback()).listen(config.PORT, () => {
+  console.log(`App is running at http://localhost:${config.PORT}`);
+  console.log('Press CTRL-C to stop');
+});

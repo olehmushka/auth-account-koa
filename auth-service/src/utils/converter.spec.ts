@@ -8,7 +8,8 @@ describe('utils/converter/camelToUnderscore', () => {
 
 describe('utils/converter/camelCasePropertiesToSnakeCase', () => {
   it('Success', () => {
-    expect({ one_case: null, two_case: null })
-      .toMatchObject(camelCasePropertiesToSnakeCase({ oneCase: null, twoCase: null }));
+    expect({ one_case: null, two_case: null }).toMatchObject(
+      camelCasePropertiesToSnakeCase({ oneCase: null, twoCase: null }),
+    );
   });
 });
