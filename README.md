@@ -11,3 +11,4 @@ The mock project with examples of usage different instruments of development.
 * Cover all auth-service by tests
 * Add precommit and prepush to the project
 * Reduce build time
+* Use tool for monitoring vulnerabilities. Try snyk.
