@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {
-    "format": "npx prettier --write \"src/**/*.ts\"",
-    "build": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
+    "lint": "yarn format:ts && yarn lint:ts",
+    "lint:ts": "tslint --force --format verbose \"src/**/*.ts\"",
+    "format:ts": "npx prettier --write \"src/**/*.ts\"",
+
+    "build": "yarn clean && yarn build:ts",
+    "build:ts": "echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
     "clean": "rimraf dist",
-    "lint": "yarn format && tslint --force --format verbose \"src/**/*.ts\"",
-    "start": "yarn run build && yarn run serve",
-    "start:dev": "yarn run build && yarn run serve:dev",
-    "start:prod": "yarn run build && yarn db:run-all-migrations && yarn run serve:pm2-runtime",
+    "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh",
+
+    "start": "yarn lint && yarn build && yarn serve",
     "serve": "node ./dist/main.js",
-    "serve:pm2": "npx pm2 start pm2.yml",
-    "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
+
+    "start:dev": "yarn lint && yarn build && yarn serve:dev",
     "serve:dev": "npx nodemon --inspect ./dist/main.js",
+
+    "start:prod": "yarn lint && yarn build && yarn db:run-all-migrations && yarn serve:pm2-runtime",
+    "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
+    "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
+
+    "serve:pm2": "npx pm2 start pm2.yml",
     "stop": "npx pm2 stop all",
-    "watch": "yarn run build -- --watch",
+    "watch": "yarn build -- --watch",
     "generate:spec": "yarn clean:swagger2 && yarn generate:swagger2 && yarn clean:models && yarn generate:models && yarn clean:swagger2",
     "generate:models": "npx @manifoldco/swagger-to-ts k8s/swagger2.yml --wrapper \"export namespace API\" --camelcase -o src/models/models.d.ts",
     "clean:models": "rimraf src/models/models.d.ts",
@@ -23,10 +32,8 @@
     "clean:swagger2": "rimraf k8s/swagger2.yml",
     "db:create-migration": "npx bash ./scripts/make_migration.sh",
     "db:run-migration": "npx bash ./scripts/run_migration.sh",
-    "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
     "db:create-seed": "npx bash ./scripts/make_seed.sh",
     "db:run-seed": "npx bash ./scripts/run_seed.sh",
-    "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh",
     "test": "npx jest",
     "coverage": "npx jest --coverage"
   },
@@ -72,6 +79,7 @@
     "koa-logger": "^3.2.1",
     "koa-oas3": "^0.18.0",
     "koa-router": "^8.0.8",
+    "koa2-swagger-ui": "^2.16.0",
     "lodash": "^4.17.15",
     "pg": "^7.18.2",
     "pm2": "^3.0.2",
@@ -80,7 +88,8 @@
     "tslint": "^5.0.0",
     "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.8.3",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "yamljs": "^0.3.0"
   },
   "jest": {
     "moduleFileExtensions": [

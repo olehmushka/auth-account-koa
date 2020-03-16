@@ -5,7 +5,7 @@ RUN apk add bash
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
-RUN yarn install
+RUN yarn install --ignore-optional
 
 EXPOSE 3000
 

@@ -1,8 +1,8 @@
 openapi: "3.0.0"
 
 info:
-  description: This package defines the Audit service.
-  title: Audit Service
+  description: This package defines the Auth service.
+  title: Auth Service
   version: 1.0.0
   license:
     name: MIT
@@ -85,13 +85,24 @@ paths:
             type: integer
             format: int32
       responses:
-        '200':
+        "200":
           description: A paged array of users
           content:
             application/json:    
               schema:
                 $ref: "#/components/schemas/SaveUsers"
-                
+
+  "/auth/docs":
+    get:
+      responses:
+        "200":
+          description: A docs for Auth Service
+          content:
+            text/html:
+              schema:
+                type: string
+
+
 components:
   schemas:
     UserId:
