@@ -37,4 +37,3 @@ Microservice of mock project with examples of usage different instruments of dev
 ## Create models from swagger file
 
 `yarn generate:spec`
-
