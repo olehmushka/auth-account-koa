@@ -34,7 +34,7 @@ export const validate = (openApiPath: string): Middleware =>
       try {
         await next();
       } catch (err) {
-        const { suggestions, code } = err as ValidationError;
+        const { suggestions = [], code } = err as ValidationError;
         ctx.status = code;
         ctx.body = getErrorResponse(err, suggestions.map(({ error }: Suggestion) => error));
       }

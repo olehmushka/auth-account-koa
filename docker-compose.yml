@@ -20,12 +20,10 @@ services:
       driver: none
   db-service:
     image: postgres:10.4
-    ports:
-      - "35432:5432"
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+    expose:
+      - 5432
+    env_file:
+      - ./auth-account-koa-config/variables/dev.env
     volumes:
       - ./storage/postgresql/data:/var/lib/postgresql/data
     logging:
@@ -35,7 +33,10 @@ services:
       context: ./auth-service
     depends_on:
       - db-service
+    env_file:
+      - ./auth-account-koa-config/variables/dev.env
     environment:
+      AUTH_PORT: 3000
       DATABASE_URL: postgres://user:pass@db-service:5432/db
       REDIS_HOST: redis://redis-service
     expose:

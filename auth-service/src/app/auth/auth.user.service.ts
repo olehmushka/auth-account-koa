@@ -1,6 +1,6 @@
 import { PgService } from '../../lib/pg';
 import { API as models } from '../../models/models';
-import { compareWithHash, sign, verify } from '../../lib/crypto';
+import { compareWithHash, sign } from '../../lib/crypto';
 import { SessionService } from '../../lib/session';
 import { _ } from '../../utils';
 import { invalidPasswordErr, invalidUsernameErr } from './common';

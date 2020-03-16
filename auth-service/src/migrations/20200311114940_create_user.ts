@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<any> {
         table.string('first_name').notNullable().defaultTo('');
         table.string('last_name').notNullable().defaultTo('');
         table
-          .enum('roles', ['ADMIN', 'GUEST', 'USER'])
+          .enum('role', ['ADMIN', 'GUEST', 'USER'])
           .notNullable();
         table.string('password').notNullable();
         table.timestamp('created_at').defaultTo(knex.fn.now());

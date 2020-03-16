@@ -4,7 +4,7 @@ import json from 'koa-json';
 import logger from 'koa-logger';
 
 import { initConfigs } from './config';
-import { getApp } from './app/app';
+import { getApp } from './app';
 import { validate } from './lib/validation';
 import { getPgClient } from './lib/pg';
 import { getRedisClient } from './lib/redis';

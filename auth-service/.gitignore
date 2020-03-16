@@ -61,7 +61,7 @@ typings/
 .next
 
 # Ignore built ts files
-dist/**/*
+dist/
 
 # Ignore reports folder
 reports

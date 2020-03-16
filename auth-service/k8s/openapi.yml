@@ -67,6 +67,8 @@ paths:
       operationId: getUsers
       tags:
       - user
+      security:
+        - bearerAuth: []
       parameters:
         - name: limit
           in: query
@@ -214,3 +216,9 @@ components:
             type: string
         message:
           type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
