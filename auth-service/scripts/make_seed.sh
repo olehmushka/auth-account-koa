@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ -n "$1" ]; then
   echo "Please, provide name for the seed"
   exit 1

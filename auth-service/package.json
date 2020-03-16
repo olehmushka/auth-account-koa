@@ -25,7 +25,6 @@
     "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
     "db:create-seed": "npx bash ./scripts/make_seed.sh",
     "db:run-seed": "npx bash ./scripts/run_seed.sh",
-    "crypto:generate-rs256-key": "npx bash ./scripts/make_rs256_key.sh",
     "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",

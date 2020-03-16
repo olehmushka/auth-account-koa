@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ $# -eq 0 ]; then
   echo "Please, provide name for the migration"
   exit 1

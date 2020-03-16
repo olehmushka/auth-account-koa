@@ -38,8 +38,3 @@ Microservice of mock project with examples of usage different instruments of dev
 
 `yarn generate:spec`
 
-## Generate *.key file for jwt
-
-It will move these files(*.key and *.key.pub) to src/lib/crypto/ directory
-
-`yarn crypto:generate-rs256-key`

@@ -1,2 +1,9 @@
 # redis storage @todo remove it and replace by vendor's service
 storage/
+# config directory is pulled to exctract configs from it
+auth-account-koa_config/
+# config file moved from pulled config directory
+.env
+# certeficates moved from pulled config directory
+*.pem
+*.key
