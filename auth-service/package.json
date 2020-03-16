@@ -25,13 +25,16 @@
     "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
     "db:create-seed": "npx bash ./scripts/make_seed.sh",
     "db:run-seed": "npx bash ./scripts/run_seed.sh",
-    "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh"
+    "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh",
+    "test": "npx jest",
+    "coverage": "npx jest --coverage"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
   "private": false,
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
+    "@types/jest": "^25.1.4",
     "@types/jsonwebtoken": "^8.3.8",
     "@types/knex": "^0.16.1",
     "@types/koa": "^2.11.2",
@@ -45,7 +48,11 @@
     "@types/node": "^9.3.0",
     "@types/pg": "^7.14.1",
     "@types/redis": "^2.8.16",
-    "@types/uuid": "^7.0.0"
+    "@types/supertest": "^2.0.8",
+    "@types/uuid": "^7.0.0",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^25.2.1"
   },
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
@@ -72,5 +79,18 @@
     "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.8.3",
     "uuid": "^7.0.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "./coverage"
   }
 }

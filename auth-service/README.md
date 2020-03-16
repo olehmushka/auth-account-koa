@@ -10,6 +10,14 @@ Microservice of mock project with examples of usage different instruments of dev
 
 `yarn start:prod`
 
+## Run tests
+
+`yarn test`
+
+## Check code coverage
+
+`yarn coverage`
+
 ## Create migration
 
 `yarn db:create-migration <migration_name>`

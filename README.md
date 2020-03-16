@@ -8,6 +8,7 @@ The mock project with examples of usage different instruments of development.
 
 ### Goals
 
-* Cover auth-service by tests (use jest lib for it)
-* Add precommit and prepush to the project
+* Cover all auth-service by tests
 * Add prettier to auth-service
+* Add route for swagger docs
+* Add precommit and prepush to the project
