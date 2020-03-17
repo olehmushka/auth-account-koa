@@ -1,10 +1,9 @@
-import { PgService } from '../../lib/pg';
-import { BaseUser } from '../../lib/baseServices';
+import { BaseUser, BasePgService } from '../../lib/baseServices';
 import { API as models } from '../../models/models';
 
 export class GetUserService extends BaseUser {
   private tableName = 'users';
-  constructor(private db: PgService) {
+  constructor(private db: BasePgService) {
     super();
   }
 
@@ -22,4 +21,4 @@ export class GetUserService extends BaseUser {
   }
 }
 
-export const getGetUserService = (db: PgService) => new GetUserService(db);
+export const getGetUserService = (db: BasePgService) => new GetUserService(db);

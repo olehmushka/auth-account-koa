@@ -1,9 +1,10 @@
 import { RedisService } from '../redis';
+import { BaseSessionService } from '../baseServices';
 
-export class SessionService {
-  private readonly sessionPrefix = 'session:';
-
-  constructor(private redisService: RedisService) {}
+export class SessionService extends BaseSessionService {
+  constructor(private redisService: RedisService) {
+    super();
+  }
 
   public async createSession(userId: string, value: string): Promise<void> {
     this.redisService.setValue(`${this.sessionPrefix}${userId}`, value);

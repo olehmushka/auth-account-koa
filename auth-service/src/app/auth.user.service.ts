@@ -1,5 +1,5 @@
 import { verify } from '../lib/crypto';
-import { SessionService } from '../lib/session';
+import { BaseSessionService } from '../lib/baseServices';
 import { _ } from '../utils';
 
 interface TokenData {
@@ -8,7 +8,7 @@ interface TokenData {
 }
 
 export class AuthUserService {
-  constructor(private session: SessionService) {}
+  constructor(private session: BaseSessionService) {}
 
   public async verifyAuthToken(authToken: string): Promise<TokenData> {
     try {
@@ -22,5 +22,5 @@ export class AuthUserService {
   }
 }
 
-export const getAuthUserService = (session: SessionService) =>
+export const getAuthUserService = (session: BaseSessionService) =>
   new AuthUserService(session);

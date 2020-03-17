@@ -1,17 +1,12 @@
 import knex from 'knex';
+import { BasePgService, SelectOptions } from '../baseServices';
 import * as config from '../../config';
 
 export const getPgClient = () => new PgService(config.DB_URL);
 
-interface SelectOptions {
-  limit?: number;
-  skip?: number;
-  where?: object;
-}
-
-export class PgService {
-  private client: any;
+export class PgService extends BasePgService {
   constructor(dbUrl: string) {
+    super();
     this.client = knex({
       client: 'pg',
       connection: dbUrl,

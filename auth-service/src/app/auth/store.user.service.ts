@@ -1,13 +1,12 @@
-import { PgService } from '../../lib/pg';
 import { API as models } from '../../models/models';
 import { hashString } from '../../lib/crypto';
-import { BaseUser } from '../../lib/baseServices';
+import { BaseUser, BasePgService } from '../../lib/baseServices';
 import { converter, uuid, _ } from '../../utils';
 
 export class StoreUserService extends BaseUser {
   private tableName = 'users';
 
-  constructor(private db: PgService) {
+  constructor(private db: BasePgService) {
     super();
   }
 
@@ -27,4 +26,4 @@ export class StoreUserService extends BaseUser {
   }
 }
 
-export const getStoreUserService = (db: PgService) => new StoreUserService(db);
+export const getStoreUserService = (db: BasePgService) => new StoreUserService(db);

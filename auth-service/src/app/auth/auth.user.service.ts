@@ -1,7 +1,6 @@
-import { PgService } from '../../lib/pg';
 import { API as models } from '../../models/models';
 import { compareWithHash, sign } from '../../lib/crypto';
-import { SessionService } from '../../lib/session';
+import { BasePgService, BaseSessionService } from '../../lib/baseServices';
 import { _ } from '../../utils';
 import { invalidPasswordErr, invalidUsernameErr } from './common';
 
@@ -13,7 +12,7 @@ interface TokenData {
 export class AuthUserService {
   private tableName = 'users';
 
-  constructor(private db: PgService, private session: SessionService) {}
+  constructor(private db: BasePgService, private session: BaseSessionService) {}
 
   public async authenticateUser({
     username,
@@ -53,5 +52,5 @@ export class AuthUserService {
   }
 }
 
-export const getAuthUserService = (db: PgService, session: SessionService) =>
+export const getAuthUserService = (db: BasePgService, session: BaseSessionService) =>
   new AuthUserService(db, session);

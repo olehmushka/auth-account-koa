@@ -1,9 +1,9 @@
 import Router from 'koa-router';
 import { getGetAllUsersHandler } from './get-all';
 import { getGetUserService } from './get.user.service';
-import { PgService } from '../../lib/pg';
+import { BasePgService } from '../../lib/baseServices';
 
-const getUsersRouter = (dbClient: PgService): Router =>
+const getUsersRouter = (dbClient: BasePgService): Router =>
   new Router().get('/', getGetAllUsersHandler(getGetUserService(dbClient)));
 
 export { getUsersRouter };

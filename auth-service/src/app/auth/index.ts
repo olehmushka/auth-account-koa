@@ -1,14 +1,14 @@
 import Router from 'koa-router';
 import { getSignUpHandler } from './sign-up.handler';
 import { getSignInHandler } from './sign-in.handler';
-import { PgService } from '../../lib/pg';
+import { BasePgService } from '../../lib/baseServices';
 import { RedisService } from '../../lib/redis';
 import { getSessionService } from '../../lib/session';
 import { getStoreUserService } from './store.user.service';
 import { getAuthUserService } from './auth.user.service';
 
 const getAuthRouter = (
-  dbClient: PgService,
+  dbClient: BasePgService,
   redisClient: RedisService,
 ): Router =>
   new Router()
