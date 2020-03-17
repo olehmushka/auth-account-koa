@@ -6,22 +6,17 @@
     "lint": "yarn format:ts && yarn lint:ts",
     "lint:ts": "tslint --force --format verbose \"src/**/*.ts\"",
     "format:ts": "npx prettier --write \"src/**/*.ts\"",
-
     "build": "yarn clean && yarn build:ts",
     "build:ts": "echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
     "clean": "rimraf dist",
     "crypto:copy-rs256-key-to-dist": "npx bash ./scripts/copy_non_ts_to_dist.sh",
-
     "start": "yarn lint && yarn build && yarn serve",
     "serve": "node ./dist/main.js",
-
     "start:dev": "yarn lint && yarn build && yarn serve:dev",
     "serve:dev": "npx nodemon --inspect ./dist/main.js",
-
     "start:prod": "yarn lint && yarn build && yarn db:run-all-migrations && yarn serve:pm2-runtime",
     "db:run-all-migrations": "npx bash ./scripts/run_all_migrations.sh",
     "serve:pm2-runtime": " npx pm2-runtime start pm2.yml",
-
     "serve:pm2": "npx pm2 start pm2.yml",
     "stop": "npx pm2 stop all",
     "watch": "yarn build -- --watch",
@@ -81,6 +76,7 @@
     "koa-router": "^8.0.8",
     "koa2-swagger-ui": "^2.16.0",
     "lodash": "^4.17.15",
+    "minimist": "^1.2.2",
     "pg": "^7.18.2",
     "pm2": "^3.0.2",
     "redis": "^3.0.2",
