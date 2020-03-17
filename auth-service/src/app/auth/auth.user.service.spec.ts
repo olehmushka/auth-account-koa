@@ -59,8 +59,7 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
             expect(e).toEqual(tt.expectedErrMsg);
           });
       } else {
-        const user = await service.authenticateUser(credentials);
-        expect(user).toMatchObject(tt.result);
+        expect(await service.authenticateUser(credentials)).toMatchObject(tt.result);
       }
     });
   }));
