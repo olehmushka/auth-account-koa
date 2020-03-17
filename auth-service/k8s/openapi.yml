@@ -61,7 +61,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/Error"
 
-  "/users":
+  "/auth/users":
     get:
       summary: Get users
       operationId: getUsers
@@ -90,7 +90,7 @@ paths:
           content:
             application/json:    
               schema:
-                $ref: "#/components/schemas/SaveUsers"
+                $ref: "#/components/schemas/GetUsersResponse"
 
   "/auth/docs":
     get:
@@ -150,6 +150,7 @@ components:
         - email
         - firstName
         - lastName
+        - role
       properties:
         id:
           "$ref": "#/components/schemas/UserId"
@@ -194,7 +195,14 @@ components:
       - data
       properties:
         data:
-          "$ref": "#/components/schemas/SafeUser"
+          required:
+          - user
+          - authToken
+          properties:
+            user:
+              "$ref": "#/components/schemas/SafeUser"
+            authToken:
+              type: string
 
     SignInUser:
       required:
@@ -215,6 +223,18 @@ components:
           properties:
             authToken:
               type: string
+
+    GetUsersResponse:
+      required:
+      - data
+      properties:
+        data:
+          required:
+          - users
+          properties:
+            users:
+              "$ref": "#/components/schemas/SaveUsers"
+
 
     Error:
       required:

@@ -41,7 +41,7 @@ export class AuthUserService {
   public async createAuthToken({
     id: userId,
     role,
-  }: models.FullUser): Promise<string> {
+  }: { id: string, role: string }): Promise<string> {
     const dataForToken: TokenData = { userId, role };
     try {
       const token = await sign(JSON.stringify(dataForToken));

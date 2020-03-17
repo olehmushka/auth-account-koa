@@ -5,7 +5,11 @@
 
 export namespace API {
   export interface SignUpUserResponse {
-    data: SafeUser;
+    data: SignUpUserResponseData;
+  }
+  export interface SignUpUserResponseData {
+    authToken: string;
+    user: SafeUser;
   }
   export interface SignUpUser {
     email: string;
@@ -30,8 +34,14 @@ export namespace API {
     firstName: string;
     id: string;
     lastName: string;
-    role?: string;
+    role: string;
     username: string;
+  }
+  export interface GetUsersResponse {
+    data: GetUsersResponseData;
+  }
+  export interface GetUsersResponseData {
+    users: SafeUser[];
   }
   export interface FullUser {
     email: string;

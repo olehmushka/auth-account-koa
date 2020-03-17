@@ -11,7 +11,7 @@ const getApp = (dbClient: PgService, redisClient: RedisService) =>
   new Router()
     .use('/auth', getAuthRouter(dbClient, redisClient).routes())
     .use(
-      '/users',
+      '/auth/users',
       getAuthUserMiddleware(getAuthUserService(getSessionService(redisClient))),
       getUsersRouter(dbClient).routes(),
     );

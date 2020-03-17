@@ -14,7 +14,10 @@ const getAuthRouter = (
   new Router()
     .post(
       '/sign-up',
-      getSignUpHandler(getStoreUserService(dbClient), redisClient),
+      getSignUpHandler(
+        getStoreUserService(dbClient),
+        getAuthUserService(dbClient, getSessionService(redisClient)),
+      ),
     )
     .post(
       '/sign-in',
