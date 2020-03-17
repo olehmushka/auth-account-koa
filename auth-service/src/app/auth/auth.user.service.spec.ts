@@ -4,14 +4,14 @@ import { MockSessionService } from '../../lib/mocks/mock-session';
 import { invalidUsernameErr, invalidPasswordErr } from './common';
 import { hashString } from '../../lib/crypto';
 
-describe('app/auth/auth.user.service.spec/getAuthUserService', () => {
+describe('app/auth/auth.user.service/getAuthUserService', () => {
   it('Should create instance of AuthUserService class', () => {
     const service = getAuthUserService(new MockPgService(), new MockSessionService());
     expect(service).toBeInstanceOf(AuthUserService);
   });
 });
 
-describe('app/auth/auth.user.service.spec/AuthUserService/authenticateUser', () => {
+describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
   const originalPassword = '';
   const user = { password: originalPassword };
   beforeAll(async () => {
@@ -66,11 +66,11 @@ describe('app/auth/auth.user.service.spec/AuthUserService/authenticateUser', () 
   }));
 });
 
-describe('app/auth/auth.user.service.spec/AuthUserService/createAuthToken', () => {
+describe('app/auth/auth.user.service/AuthUserService/createAuthToken', () => {
   it('Should catch session error', async () => {
     const expectedErrMsg = 'mockErr';
-    const service = getAuthUserService(new MockPgService(), new MockSessionService(new Error(expectedErrMsg)));
-    await service.createAuthToken({ id: '', role: '' })
+    getAuthUserService(new MockPgService(), new MockSessionService(new Error(expectedErrMsg)))
+      .createAuthToken({ id: '', role: '' })
       .catch(e => {
         expect(e).toEqual(expectedErrMsg);
       });

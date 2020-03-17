@@ -11,7 +11,7 @@ export const getSignUpHandler = (
 ): Middleware => async (ctx: Context, next: Next): Promise<void> => {
   try {
     const user = ctx.request.body as models.SignUpUser;
-    const savedUser = await storeService.create(user);
+    const savedUser = await storeService.store(user);
     const authToken = await authService.createAuthToken(savedUser);
     ctx.body = {
       data: {
