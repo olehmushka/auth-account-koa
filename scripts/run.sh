@@ -5,5 +5,5 @@ THIS_DIR=$( dirname "${BASH_SOURCE}" )
 
 load_configs $1
 docker-compose build
-docker-compose up -d
+docker-compose up -d --remove-orphans --force-recreate
 docker-compose logs --tail=70 -f

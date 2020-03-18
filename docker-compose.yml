@@ -1,14 +1,6 @@
 version: '3.1'
 
 services:
-  nginx-service:
-    restart: always
-    build:
-      context: ./nginx-service
-    ports:
-      - '80:80'
-    links:
-      - auth-service
   redis-service:
     image: redis
     restart: always
@@ -18,6 +10,7 @@ services:
       - 6379
     logging:
       driver: none
+
   db-service:
     image: postgres:10.4
     expose:
@@ -28,6 +21,7 @@ services:
       - ./storage/postgresql/data:/var/lib/postgresql/data
     logging:
       driver: none
+
   auth-service:
     build:
       context: ./auth-service
@@ -37,3 +31,19 @@ services:
       - ./.env
     expose:
       - 3000
+
+  frontend:
+    build:
+      context: ./frontend
+    expose:
+      - 3000
+
+  nginx-service:
+    restart: always
+    build:
+      context: ./nginx-service
+    ports:
+      - '80:80'
+    links:
+      - auth-service
+      - frontend

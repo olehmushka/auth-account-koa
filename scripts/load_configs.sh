@@ -1,20 +1,21 @@
 #!/bin/bash
 
 THIS_DIR=$( dirname "${BASH_SOURCE}" )
+CONFIG_REPO_NAME="auth-account-koa_config"
 . $THIS_DIR/colors.sh
 
 refreshConfigDir()
 {
-  logSection "Delete old config directory..."
-  rm -rf auth-account-koa_config
-  logSection "Pulling new config directory..."
-  git clone https://github.com/olehmushka/auth-account-koa_config.git
+  echo "Delete old config directory..."
+  rm -rf $CONFIG_REPO_NAME
+  echo "Pulling new config directory..."
+  git clone https://github.com/olehmushka/$CONFIG_REPO_NAME.git
 }
 
 applyCerteficates()
 {
-  logSection "Loading pulled certeficates..."
-  for file in "$(pwd)/auth-account-koa_config/certeficates"/*
+  echo "Loading pulled certeficates..."
+  for file in "$(pwd)/$CONFIG_REPO_NAME/certeficates"/*
   do
     if [ ! -f "$file" ];then
       continue
@@ -25,7 +26,7 @@ applyCerteficates()
       rm $DIST_FILE
       logSection "Deleted old $DIST_FILE ."
     fi
-    mv $(pwd)/auth-account-koa_config/certeficates/$FILENAME $DIST_FILE
+    mv $(pwd)/$CONFIG_REPO_NAME/certeficates/$FILENAME $DIST_FILE
     logSection "Moved $FILENAME to $(pwd)/auth-service/src/lib/crypto/ ."
   done
 }
@@ -36,15 +37,15 @@ refreshEnvFile()
   if [ -n "$1" ]; then
     $ENV=$1
   fi
-  logSection "Loading variables for $ENV environment..."
-  PATHNAME=$(pwd)/auth-account-koa_config/variables/$ENV.env
+  echo "Loading variables for $ENV environment..."
+  PATHNAME=$(pwd)/$CONFIG_REPO_NAME/variables/$ENV.env
   if [ ! -f "$PATHNAME" ];then
     logError "$PATHNAME does not exist!"
     exit 1
   fi
-  logSection "Removing old .env file..."
+  echo "Removing old .env file..."
   rm .env
-  logSection "Moving $ENV.env to .env file..."
+  echo "Moving $ENV.env to .env file..."
   mv $PATHNAME .env
 }
 
@@ -53,4 +54,6 @@ load_configs()
   refreshConfigDir
   applyCerteficates
   refreshEnvFile $1
+  rm -rf $CONFIG_REPO_NAME
+  logSection "Removed $CONFIG_REPO_NAME directory."
 }
