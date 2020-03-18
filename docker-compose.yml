@@ -32,12 +32,6 @@ services:
     expose:
       - 3000
 
-  frontend:
-    build:
-      context: ./frontend
-    expose:
-      - 3000
-
   nginx-service:
     restart: always
     build:

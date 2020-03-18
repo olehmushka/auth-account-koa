@@ -5,5 +5,7 @@ auth-account-koa_config/
 # config file moved from pulled config directory
 .env
 # certeficates moved from pulled config directory
-*.pem
-*.key
+**/*.pem
+**/*.key
+
+.DS_Store
