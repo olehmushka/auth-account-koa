@@ -40,4 +40,3 @@ services:
       - '80:80'
     links:
       - auth-service
-      - frontend

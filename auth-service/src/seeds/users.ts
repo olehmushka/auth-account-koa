@@ -22,9 +22,10 @@ const generateUsers = (numUsers: number) => {
 };
 
 export async function seed(knex: Knex): Promise<any> {
+  const NUM_USERS_TO_SEED = 10;
   return knex('users')
     .del()
     .then(() => {
-      return knex('users').insert(generateUsers(10));
+      return knex('users').insert(generateUsers(NUM_USERS_TO_SEED));
     });
 }

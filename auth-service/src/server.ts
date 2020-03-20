@@ -25,8 +25,8 @@ server.use(validate(swaggerPathname));
 const dbClient = getPgClient();
 const redisClient = getRedisClient();
 const app = getApp(dbClient, redisClient);
-app.get('/auth/docs', koaSwagger({
-  routePrefix: '/auth/docs',
+app.get('/api/auth/docs', koaSwagger({
+  routePrefix: '/api/auth/docs',
   swaggerOptions: {
     spec: yamljs.load(swaggerPathname),
   },

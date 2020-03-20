@@ -8,7 +8,7 @@ info:
     name: MIT
 
 paths:
-  "/auth/sign-up":
+  "/api/auth/sign-up":
     post:
       summary: Create a user
       operationId: createUser
@@ -34,7 +34,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/Error"
-  "/auth/sign-in":
+  "/api/auth/sign-in":
     post:
       summary: Sign In with credentials
       operationId: signInAuth
@@ -61,7 +61,7 @@ paths:
               schema:
                 "$ref": "#/components/schemas/Error"
 
-  "/auth/users":
+  "/api/auth/users":
     get:
       summary: Get users
       operationId: getUsers
@@ -92,7 +92,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/GetUsersResponse"
 
-  "/auth/docs":
+  "/api/auth/docs":
     get:
       responses:
         "200":
