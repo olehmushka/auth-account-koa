@@ -23,8 +23,10 @@ services:
       driver: none
 
   auth-service:
+    container_name: auth-service
     build:
       context: ./auth-service
+      dockerfile: Dockerfile
     depends_on:
       - db-service
     env_file:
@@ -32,10 +34,20 @@ services:
     expose:
       - 3000
 
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    expose:
+      - 80
+
   nginx-service:
     restart: always
+    container_name: nginx-service
     build:
       context: ./nginx-service
+      dockerfile: Dockerfile
     ports:
       - '80:80'
     links:
