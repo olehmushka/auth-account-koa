@@ -1,0 +1,5 @@
+@for $size from 1 through 36 {
+  .font-#{$size} {
+    font-size: #{$size}px;
+  }
+}

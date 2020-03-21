@@ -12,7 +12,12 @@ export const getSignInHandler = (
     const credentials = ctx.request.body as models.SignInUser;
     const user = await authService.authenticateUser(credentials);
     const authToken = await authService.createAuthToken(user);
-    ctx.body = { data: { authToken } } as models.SignInUserResponse;
+    ctx.body = {
+      data: {
+        authToken,
+        user,
+      },
+    } as models.SignInUserResponse;
     ctx.status = status.OK;
     await next();
   } catch (err) {

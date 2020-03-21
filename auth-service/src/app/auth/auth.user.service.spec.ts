@@ -3,6 +3,7 @@ import { MockPgService } from '../../lib/mocks/mock-pg';
 import { MockSessionService } from '../../lib/mocks/mock-session';
 import { invalidUsernameErr, invalidPasswordErr } from './common';
 import { hashString } from '../../lib/crypto';
+import { _ } from '../../utils';
 
 describe('app/auth/auth.user.service/getAuthUserService', () => {
   it('Should create instance of AuthUserService class', () => {
@@ -43,7 +44,7 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
     {
       name: 'Should be success',
       pgData: [user],
-      result: user,
+      result: _.omit(user, ['password']),
     },
   ];
   Promise.all(tests.map(async (tt) => {

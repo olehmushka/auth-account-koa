@@ -1,0 +1,18 @@
+$breadcrumb-height: 45px;
+
+.breadcrumb-wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: $breadcrumb-height;
+
+  .breadcrumb {
+    margin-bottom: 0 !important;
+  }
+}
+
+.container-fluid {
+  padding-top: $breadcrumb-height + 10 !important ;
+  min-height: 100%;
+  position: relative;
+}

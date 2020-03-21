@@ -24,6 +24,7 @@ export namespace API {
   }
   export interface SignInUserResponseData {
     authToken: string;
+    user: SafeUser;
   }
   export interface SignInUser {
     password: string;

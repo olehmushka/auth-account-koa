@@ -199,10 +199,10 @@ components:
           - user
           - authToken
           properties:
-            user:
-              "$ref": "#/components/schemas/SafeUser"
             authToken:
               type: string
+            user:
+              "$ref": "#/components/schemas/SafeUser"
 
     SignInUser:
       required:
@@ -220,9 +220,12 @@ components:
         data:
           required:
           - authToken
+          - user
           properties:
             authToken:
               type: string
+            user:
+              "$ref": "#/components/schemas/SafeUser"
 
     GetUsersResponse:
       required:

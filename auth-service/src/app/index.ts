@@ -8,10 +8,10 @@ import { RedisService } from '../lib/redis';
 import { getSessionService } from '../lib/session';
 
 const getApp = (dbClient: BasePgService, redisClient: RedisService) =>
-  new Router({ prefix: '/api/auth' })
-    .use('/', getAuthRouter(dbClient, redisClient).routes())
+  new Router()
+    .use('/api/auth', getAuthRouter(dbClient, redisClient).routes())
     .use(
-      '/users',
+      '/api/auth/users',
       getAuthUserMiddleware(getAuthUserService(getSessionService(redisClient))),
       getUsersRouter(dbClient).routes(),
     );

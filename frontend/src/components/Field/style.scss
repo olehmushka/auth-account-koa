@@ -1,0 +1,26 @@
+.form-control:focus {
+  z-index: 0 !important;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='checkbox'] {
+  left: 8rem;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.check-field {
+  input[type='checkbox'] {
+    left: 4rem;
+  }
+
+  flex: 0 0 1fr;
+}

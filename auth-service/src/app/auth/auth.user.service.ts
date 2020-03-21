@@ -1,6 +1,6 @@
 import { API as models } from '../../models/models';
 import { compareWithHash, sign } from '../../lib/crypto';
-import { BasePgService, BaseSessionService } from '../../lib/baseServices';
+import { BasePgService, BaseSessionService, BaseUser } from '../../lib/baseServices';
 import { _ } from '../../utils';
 import { invalidPasswordErr, invalidUsernameErr } from './common';
 
@@ -9,15 +9,17 @@ interface TokenData {
   role: string;
 }
 
-export class AuthUserService {
+export class AuthUserService extends BaseUser {
   private tableName = 'users';
 
-  constructor(private db: BasePgService, private session: BaseSessionService) {}
+  constructor(private db: BasePgService, private session: BaseSessionService) {
+    super();
+  }
 
   public async authenticateUser({
     username,
     password,
-  }: models.SignInUser): Promise<models.FullUser> {
+  }: models.SignInUser): Promise<models.SafeUser> {
     try {
       const users = await this.db.select(this.tableName, {
         where: { username },
@@ -29,7 +31,7 @@ export class AuthUserService {
       const isMatch = await compareWithHash(password, users[0].password);
 
       if (isMatch) {
-        return users[0];
+        return this.filterFullUser(users[0], ['password']);
       }
       throw new Error(invalidPasswordErr);
     } catch (err) {

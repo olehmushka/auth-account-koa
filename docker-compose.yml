@@ -41,6 +41,8 @@ services:
       dockerfile: Dockerfile
     expose:
       - 80
+    links:
+      - auth-service
 
   nginx-service:
     restart: always
@@ -52,3 +54,4 @@ services:
       - '80:80'
     links:
       - auth-service
+      - frontend
