@@ -30,6 +30,13 @@ export namespace API {
     password: string;
     username: string;
   }
+  export interface Session {
+    expiryDate: number;
+    id: string;
+    serviceId: string;
+    serviceToken: string;
+    userId: string;
+  }
   export interface SafeUser {
     email: string;
     firstName: string;
@@ -38,11 +45,30 @@ export namespace API {
     role: string;
     username: string;
   }
+  export interface PostSessionResponse {
+    data: PostSessionResponseData;
+  }
+  export interface PostSessionResponseData {
+    session: Session;
+  }
+  export interface PostSession {
+    data: PostSessionData;
+  }
+  export interface PostSessionData {
+    serviceId: string;
+    userId: string;
+  }
   export interface GetUsersResponse {
     data: GetUsersResponseData;
   }
   export interface GetUsersResponseData {
     users: SafeUser[];
+  }
+  export interface GetSessionResponse {
+    data: GetSessionResponseData;
+  }
+  export interface GetSessionResponseData {
+    session: Session;
   }
   export interface FullUser {
     email: string;

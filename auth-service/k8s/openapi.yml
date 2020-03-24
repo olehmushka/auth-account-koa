@@ -61,6 +61,89 @@ paths:
               schema:
                 "$ref": "#/components/schemas/Error"
 
+  "/api/auth/sessions":
+    post:
+      summary: Create session
+      operationId: postSession
+      tags:
+      - session
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: The session's data
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PostSession"
+        required: true
+      responses:
+        "200":
+          description: Session was created successfully
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PostSessionResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+
+  "/api/auth/sessions/{sessionId}":
+    get:
+      summary: Get session by ID
+      operationId: getSession
+      tags:
+      - session
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          description: The id of the session to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Info for a specific session
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetSessionResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
+    delete:
+      summary: Delete session by ID
+      operationId: deleteSession
+      tags:
+      - session
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          description: The id of the session to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: The session was deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
   "/api/auth/users":
     get:
       summary: Get users
@@ -91,6 +174,12 @@ paths:
             application/json:    
               schema:
                 $ref: "#/components/schemas/GetUsersResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Error"
 
   "/api/auth/docs":
     get:
@@ -238,6 +327,61 @@ components:
             users:
               "$ref": "#/components/schemas/SaveUsers"
 
+    Session:
+      required:
+      - id
+      - userId
+      - serviceId
+      - serviceToken
+      - expiryDate
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          "$ref": "#/components/schemas/UserId"
+        serviceId:
+          type: string
+          format: uuid
+        serviceToken:
+          type: string
+        expiryDate:
+          type: integer
+          format: int32
+    PostSession:
+      required:
+      - data
+      properties:
+        data:
+          required:
+          - userId
+          - serviceId
+          properties:
+            userId:
+              "$ref": "#/components/schemas/UserId"
+            serviceId:
+              type: string
+              format: uuid
+    PostSessionResponse:
+      required:
+      - data
+      properties:
+        data:
+          required:
+          - session
+          properties:
+            session:
+              "$ref": "#/components/schemas/Session"
+    GetSessionResponse:
+      required:
+      - data
+      properties:
+        data:
+          required:
+          - session
+          properties:
+            session:
+              "$ref": "#/components/schemas/Session"
 
     Error:
       required:
