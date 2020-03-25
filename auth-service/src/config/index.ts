@@ -1,24 +1,18 @@
 export const PORT: number = process.env.AUTH_PORT
   ? Number(process.env.AUTH_PORT)
   : 0;
-// export const PORT = 3000;
 
 export const DB_URL: string = process.env.DATABASE_URL || '';
-// export const DB_URL: string = 'postgres://user:pass@localhost:5432/db';
 export const MAX_NUMBER_OF_CLIENTS_IN_DB_POOL = 10;
 export const IDLE_TIMOUT_MILLIS_IN_DB = 30000;
 
 export const REDIS_HOST: string = process.env.REDIS_HOST || '';
-// export const REDIS_HOST: string = 'redis://localhost:6379';
 
 // Services IDs
 export const AUTH_SERVICE_ID: string = process.env.AUTH_SERVICE_ID || '';
-// export const AUTH_SERVICE_ID: string = 'b13a4863-2208-4528-a077-91cec9eeaba8';
-// Session
-// export const AUTH_SESSION_LIFETIME: number  = process.env.AUTH_SESSION_LIFETIME
-//   ? Number(process.env.AUTH_SESSION_LIFETIME)
-//   : 0;
-export const AUTH_SESSION_LIFETIME = 600000;
+export const AUTH_SESSION_LIFETIME: number  = process.env.AUTH_SESSION_LIFETIME
+  ? Number(process.env.AUTH_SESSION_LIFETIME)
+  : 0;
 
 export const initConfigs = () => {
   if (PORT === 0) {
@@ -37,7 +31,7 @@ export const initConfigs = () => {
     throw new Error('AUTH_SERVICE_ID is not initialized');
   }
 
-  // if (AUTH_SESSION_LIFETIME === 0) {
-  //   throw new Error('AUTH_SESSION_LIFETIME is not initialized');
-  // }
+  if (AUTH_SESSION_LIFETIME === 0) {
+    throw new Error('AUTH_SESSION_LIFETIME is not initialized');
+  }
 };
