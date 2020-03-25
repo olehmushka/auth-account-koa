@@ -5,7 +5,7 @@ export interface ISignInData {
 
 export interface ILoginResponse {
   data: {
-    authToken: string;
+    session: ISession;
     user: ISafeUser;
   };
 }

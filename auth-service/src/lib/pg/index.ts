@@ -1,5 +1,6 @@
 import knex from 'knex';
 import { BasePgService, SelectOptions } from '../baseServices';
+import { converter } from '../../utils';
 import * as config from '../../config';
 
 export const getPgClient = () => new PgService(config.DB_URL);
@@ -23,12 +24,14 @@ export class PgService extends BasePgService {
       ? this.client(tableName)
           .select('*')
           .from(tableName)
+          .then(items => items.map(converter.snakeCasePropertiesToCamelCase))
       : this.client(tableName)
           .select('*')
           .from(tableName)
           .where(options.where || {})
           .limit(options.limit)
-          .offset(options.skip);
+          .offset(options.skip)
+          .then(items => items.map(converter.snakeCasePropertiesToCamelCase));
   }
 
   public query(queryText: string, values?: any[]): Promise<any> {

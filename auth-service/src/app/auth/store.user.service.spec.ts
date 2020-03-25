@@ -18,7 +18,7 @@ describe('app/auth/store.user.service/StoreUserService', () => {
     role: '',
   };
 
-  it('Should catch db error', async() => {
+  it('Should catch db error', async () => {
     const expectedErrMsg = 'mockErr';
     getStoreUserService(new MockPgService(new Error(expectedErrMsg)))
       .store(emptyUser)

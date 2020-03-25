@@ -9,10 +9,10 @@ export const getGetAllUsersHandler = (
 ): Middleware => async (ctx: Context, next: Next) => {
   try {
     const { limit, skip } = ctx.request.query;
-    const users = await getUserService.getSaveBalk(
+    const users = (await getUserService.getSaveBalk(
       limit,
       skip,
-    ) as models.SafeUser[];
+    )) as models.SafeUser[];
     ctx.body = { data: { users } } as models.GetUsersResponse;
     ctx.status = status.OK;
     await next();

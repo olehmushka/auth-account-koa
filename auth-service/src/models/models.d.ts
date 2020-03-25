@@ -8,7 +8,7 @@ export namespace API {
     data: SignUpUserResponseData;
   }
   export interface SignUpUserResponseData {
-    authToken: string;
+    session: Session;
     user: SafeUser;
   }
   export interface SignUpUser {
@@ -23,7 +23,7 @@ export namespace API {
     data: SignInUserResponseData;
   }
   export interface SignInUserResponseData {
-    authToken: string;
+    session: Session;
     user: SafeUser;
   }
   export interface SignInUser {

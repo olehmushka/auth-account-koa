@@ -1,28 +1,26 @@
 import Router from 'koa-router';
 import { getSignUpHandler } from './sign-up.handler';
 import { getSignInHandler } from './sign-in.handler';
-import { BasePgService } from '../../lib/baseServices';
-import { RedisService } from '../../lib/redis';
-import { getSessionService } from '../../lib/session';
+import { BasePgService, BaseSessionToolkit } from '../../lib/baseServices';
 import { getStoreUserService } from './store.user.service';
 import { getAuthUserService } from './auth.user.service';
 
 const getAuthRouter = (
   dbClient: BasePgService,
-  redisClient: RedisService,
+  sessionService: BaseSessionToolkit,
 ): Router =>
   new Router()
     .post(
       '/sign-up',
       getSignUpHandler(
         getStoreUserService(dbClient),
-        getAuthUserService(dbClient, getSessionService(redisClient)),
+        getAuthUserService(dbClient, sessionService),
       ),
     )
     .post(
       '/sign-in',
       getSignInHandler(
-        getAuthUserService(dbClient, getSessionService(redisClient)),
+        getAuthUserService(dbClient, sessionService),
       ),
     );
 

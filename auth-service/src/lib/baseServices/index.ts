@@ -36,18 +36,26 @@ export abstract class BasePgService {
   }
 }
 
-export class BaseSessionService {
-  protected readonly sessionPrefix = 'session:';
+export abstract class BaseSessionToolkit {
+  protected readonly sessionPrefix = 'session';
 
-  public async createSession(_userId: string, _value: string): Promise<void> {
+  public async createSession(_id: string, _value: string): Promise<any> {
     return new Promise(() => {});
   }
 
-  public async getSession(_userId: string): Promise<any> {
+  public async getSession(_id: string): Promise<any> {
     return new Promise(() => {});
   }
 
-  public async destroySession(_userId: string): Promise<void> {
+  public async destroySession(_id: string): Promise<any> {
     return new Promise(() => {});
+  }
+
+  public async isExpired(_data: SessionData | string): Promise<any> {
+    return new Promise(() => {});
+  }
+
+  public composeKey(data: any): string {
+    return '';
   }
 }

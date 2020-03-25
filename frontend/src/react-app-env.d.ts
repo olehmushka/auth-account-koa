@@ -35,3 +35,11 @@ interface ISafeUser {
 }
 
 type IRole = 'ADMIN' | 'USER' | 'GUEST';
+
+interface ISession {
+  expiryDate: number;
+  id: string;
+  serviceId: string;
+  serviceToken: string;
+  userId: string;
+}

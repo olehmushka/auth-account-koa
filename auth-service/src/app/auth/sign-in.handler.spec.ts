@@ -11,7 +11,7 @@ describe('app/auth/sign-in.handler', () => {
   const originalPassword = '';
   const user = { password: originalPassword };
   beforeAll(async () => {
-    user.password = await hashString(''); 
+    user.password = await hashString('');
   });
 
   const tests: {
@@ -21,7 +21,7 @@ describe('app/auth/sign-in.handler', () => {
     sessionErrMsg?: string;
     expectedBody?: any;
     expectedStatusCode: number;
-  }[]  = [
+  }[] = [
     {
       name: 'Should catch db error',
       pgErrMsg: 'mockErr',
@@ -66,23 +66,28 @@ describe('app/auth/sign-in.handler', () => {
     },
   ];
 
-  Promise.all(tests.map(async (tt) => {
-    await it(tt.name, async() => {
-      const pgErr = tt.pgErrMsg
-        ? new Error(tt.pgErrMsg)
-        : undefined;
-      const sessionErr = tt.sessionErrMsg
-        ? new Error(tt.sessionErrMsg)
-        : undefined;
-      const service = getAuthUserService(new MockPgService(pgErr, tt.pgData), new MockSessionService(sessionErr));
-      const handler = getSignInHandler(service);
+  Promise.all(
+    tests.map(async tt => {
+      await it(tt.name, async () => {
+        const pgErr = tt.pgErrMsg ? new Error(tt.pgErrMsg) : undefined;
+        const sessionErr = tt.sessionErrMsg
+          ? new Error(tt.sessionErrMsg)
+          : undefined;
+        const service = getAuthUserService(
+          new MockPgService(pgErr, tt.pgData),
+          new MockSessionService(sessionErr),
+        );
+        const handler = getSignInHandler(service);
 
-      const ctx = { request: { body: { username: '', password: originalPassword } } } as Context;
-      await handler(ctx, async () => {});
-      if (tt.expectedBody) {
-        expect(ctx.body).toMatchObject(tt.expectedBody);
-      }
-      expect(ctx.status).toBe(tt.expectedStatusCode);
-    });
-  }));
+        const ctx = {
+          request: { body: { username: '', password: originalPassword } },
+        } as Context;
+        await handler(ctx, async () => {});
+        if (tt.expectedBody) {
+          expect(ctx.body).toMatchObject(tt.expectedBody);
+        }
+        expect(ctx.status).toBe(tt.expectedStatusCode);
+      });
+    }),
+  );
 });

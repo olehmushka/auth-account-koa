@@ -26,9 +26,11 @@ describe('lib/validation/getErrorResponse', () => {
     },
   ];
 
-  Promise.all(tests.map(async (tt) => {
-    await it(tt.name, async() => {
-      expect(getErrorResponse(tt.err, tt.messages)).toMatchObject(tt.result);
-    });
-  }));
+  Promise.all(
+    tests.map(async tt => {
+      await it(tt.name, async () => {
+        expect(getErrorResponse(tt.err, tt.messages)).toMatchObject(tt.result);
+      });
+    }),
+  );
 });

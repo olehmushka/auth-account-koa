@@ -11,11 +11,11 @@ class AuthService extends ApiService {
     });
 
     const {
-      authToken,
+      session: { serviceToken },
       user,
     } = response.data.data;
 
-    AuthService.tokenStorage.setFullTokenData(authToken, user);
+    AuthService.tokenStorage.setFullTokenData(serviceToken, user);
 
     return this.fetchLoggedInUser();
   }

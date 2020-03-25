@@ -26,4 +26,5 @@ export class StoreUserService extends BaseUser {
   }
 }
 
-export const getStoreUserService = (db: BasePgService) => new StoreUserService(db);
+export const getStoreUserService = (db: BasePgService) =>
+  new StoreUserService(db);

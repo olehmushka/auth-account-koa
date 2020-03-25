@@ -7,7 +7,10 @@ import { _ } from '../../utils';
 
 describe('app/auth/auth.user.service/getAuthUserService', () => {
   it('Should create instance of AuthUserService class', () => {
-    const service = getAuthUserService(new MockPgService(), new MockSessionService());
+    const service = getAuthUserService(
+      new MockPgService(),
+      new MockSessionService(),
+    );
     expect(service).toBeInstanceOf(AuthUserService);
   });
 });
@@ -16,7 +19,7 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
   const originalPassword = '';
   const user = { password: originalPassword };
   beforeAll(async () => {
-    user.password = await hashString(''); 
+    user.password = await hashString('');
   });
 
   const tests: {
@@ -25,7 +28,7 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
     pgData?: any[];
     expectedErrMsg?: string;
     result?: any;
-  }[]  = [
+  }[] = [
     {
       name: 'Should catch db error',
       pgErrMsg: 'mockErr',
@@ -47,29 +50,38 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
       result: _.omit(user, ['password']),
     },
   ];
-  Promise.all(tests.map(async (tt) => {
-    await it(tt.name, async() => {
-      const expectedErr = tt.expectedErrMsg
-        ? new Error(tt.expectedErrMsg)
-        : undefined;
-      const service = getAuthUserService(new MockPgService(expectedErr, tt.pgData), new MockSessionService());
-      const credentials = { username: '', password: originalPassword };
-      if (tt.expectedErrMsg) {
-        await service.authenticateUser(credentials)
-          .catch(e => {
+  Promise.all(
+    tests.map(async tt => {
+      await it(tt.name, async () => {
+        const expectedErr = tt.expectedErrMsg
+          ? new Error(tt.expectedErrMsg)
+          : undefined;
+        const service = getAuthUserService(
+          new MockPgService(expectedErr, tt.pgData),
+          new MockSessionService(),
+        );
+        const credentials = { username: '', password: originalPassword };
+        if (tt.expectedErrMsg) {
+          await service.authenticateUser(credentials).catch(e => {
             expect(e).toEqual(tt.expectedErrMsg);
           });
-      } else {
-        expect(await service.authenticateUser(credentials)).toMatchObject(tt.result);
-      }
-    });
-  }));
+        } else {
+          expect(await service.authenticateUser(credentials)).toMatchObject(
+            tt.result,
+          );
+        }
+      });
+    }),
+  );
 });
 
 describe('app/auth/auth.user.service/AuthUserService/createAuthToken', () => {
   it('Should catch session error', async () => {
     const expectedErrMsg = 'mockErr';
-    getAuthUserService(new MockPgService(), new MockSessionService(new Error(expectedErrMsg)))
+    getAuthUserService(
+      new MockPgService(),
+      new MockSessionService(new Error(expectedErrMsg)),
+    )
       .createAuthToken({ id: '', role: '' })
       .catch(e => {
         expect(e).toEqual(expectedErrMsg);

@@ -1,14 +1,19 @@
 import { Context, Next, Middleware } from 'koa';
+import { BaseSessionToolkit } from '../../lib/baseServices';
 import { getErrorResponse } from '../../lib/validation';
 import { API as models } from '../../models/models';
 import { status } from '../../utils';
 
-export const getPostSessionHandler = (): Middleware => async (ctx: Context, next: Next) => {
+export const getPostSessionHandler = (sessionService: BaseSessionToolkit): Middleware => async (
+  ctx: Context,
+  next: Next,
+) => {
   try {
-    const {
-      serviceId,
-      userId,
-    } = ctx.request.body.data as models.PostSessionData;
+    const { serviceId, userId } = ctx.request.body
+      .data as models.PostSessionData;
+
+      // await sessionService.createSession();
+      // createSession(data: SessionData | string, token: string)
 
     // @todo add session creation logic
 

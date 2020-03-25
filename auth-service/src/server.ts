@@ -2,7 +2,7 @@ import koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import json from 'koa-json';
 import logger from 'koa-logger';
-import koaSwagger  from 'koa2-swagger-ui';
+import koaSwagger from 'koa2-swagger-ui';
 import * as yamljs from 'yamljs';
 
 import { initConfigs } from './config';
@@ -25,12 +25,15 @@ server.use(validate(swaggerPathname));
 const dbClient = getPgClient();
 const redisClient = getRedisClient();
 const app = getApp(dbClient, redisClient);
-app.get('/api/auth/docs', koaSwagger({
-  routePrefix: '/api/auth/docs',
-  swaggerOptions: {
-    spec: yamljs.load(swaggerPathname),
-  },
-}));
+app.get(
+  '/api/auth/docs',
+  koaSwagger({
+    routePrefix: '/api/auth/docs',
+    swaggerOptions: {
+      spec: yamljs.load(swaggerPathname),
+    },
+  }),
+);
 server.use(app.routes());
 server.use(app.allowedMethods());
 

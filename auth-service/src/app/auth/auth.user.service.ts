@@ -1,8 +1,13 @@
 import { API as models } from '../../models/models';
 import { compareWithHash, sign } from '../../lib/crypto';
-import { BasePgService, BaseSessionService, BaseUser } from '../../lib/baseServices';
+import {
+  BasePgService,
+  BaseSessionToolkit,
+  BaseUser,
+} from '../../lib/baseServices';
 import { _ } from '../../utils';
 import { invalidPasswordErr, invalidUsernameErr } from './common';
+import { AUTH_SERVICE_ID } from '../../config';
 
 interface TokenData {
   userId: string;
@@ -12,7 +17,7 @@ interface TokenData {
 export class AuthUserService extends BaseUser {
   private tableName = 'users';
 
-  constructor(private db: BasePgService, private session: BaseSessionService) {
+  constructor(private db: BasePgService, private session: BaseSessionToolkit) {
     super();
   }
 
@@ -42,17 +47,34 @@ export class AuthUserService extends BaseUser {
   public async createAuthToken({
     id: userId,
     role,
-  }: { id: string, role: string }): Promise<string> {
+  }: {
+    id: string;
+    role: string;
+  }): Promise<string> {
     const dataForToken: TokenData = { userId, role };
     try {
       const token = await sign(JSON.stringify(dataForToken));
-      await this.session.createSession(userId, token);
       return token;
+    } catch (err) {
+      return err.message ? Promise.reject(err.message) : Promise.reject(err);
+    }
+  }
+
+  public async createSession(userId: string, token: string): Promise<models.Session> {
+    try {
+      const result = await this.session
+        .createSession(this.session.composeKey({ userId, serviceId: AUTH_SERVICE_ID }), token);
+      if (result instanceof Error) {
+        return result.message ? Promise.reject(result.message) : Promise.reject(result);
+      }
+      return result;
     } catch (err) {
       return err.message ? Promise.reject(err.message) : Promise.reject(err);
     }
   }
 }
 
-export const getAuthUserService = (db: BasePgService, session: BaseSessionService) =>
-  new AuthUserService(db, session);
+export const getAuthUserService = (
+  db: BasePgService,
+  session: BaseSessionToolkit,
+) => new AuthUserService(db, session);

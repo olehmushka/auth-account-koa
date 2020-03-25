@@ -105,7 +105,6 @@ paths:
           description: The id of the session to retrieve
           schema:
             type: string
-            format: uuid
       responses:
         "200":
           description: Info for a specific session
@@ -133,7 +132,6 @@ paths:
           description: The id of the session to delete
           schema:
             type: string
-            format: uuid
       responses:
         "204":
           description: The session was deleted
@@ -285,11 +283,11 @@ components:
       properties:
         data:
           required:
+          - session
           - user
-          - authToken
           properties:
-            authToken:
-              type: string
+            session:
+              "$ref": "#/components/schemas/Session"
             user:
               "$ref": "#/components/schemas/SafeUser"
 
@@ -308,11 +306,11 @@ components:
       properties:
         data:
           required:
-          - authToken
+          - session
           - user
           properties:
-            authToken:
-              type: string
+            session:
+              "$ref": "#/components/schemas/Session"
             user:
               "$ref": "#/components/schemas/SafeUser"
 

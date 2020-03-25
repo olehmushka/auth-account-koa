@@ -9,7 +9,7 @@ describe('app/users/get.user.service/getGetUserService', () => {
 });
 
 describe('app/users/get.user.service/GetUserService', () => {
-  it('Should catch db error', async() => {
+  it('Should catch db error', async () => {
     const expectedErr = new Error('mockErr');
     getGetUserService(new MockPgService(expectedErr))
       .getSaveBalk()

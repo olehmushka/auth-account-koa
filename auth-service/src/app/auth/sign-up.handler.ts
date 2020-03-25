@@ -13,9 +13,10 @@ export const getSignUpHandler = (
     const user = ctx.request.body as models.SignUpUser;
     const savedUser = await storeService.store(user);
     const authToken = await authService.createAuthToken(savedUser);
+    const session = await authService.createSession(savedUser.id, authToken);
     ctx.body = {
       data: {
-        authToken,
+        session,
         user: savedUser,
       },
     } as models.SignUpUserResponse;

@@ -1,22 +1,20 @@
 import { Context, Next, Middleware } from 'koa';
+import { BaseSessionToolkit } from '../../lib/baseServices';
 import { getErrorResponse } from '../../lib/validation';
 import { API as models } from '../../models/models';
 import { status } from '../../utils';
 
-export const getGetSessionHandler = (): Middleware => async (ctx: Context, next: Next) => {
+export const getGetSessionHandler = (sessionService: BaseSessionToolkit): Middleware => async (
+  ctx: Context,
+  next: Next,
+) => {
   try {
-    const { sessionId } = ctx.params;
+    const result = await sessionService.getSession(ctx.params.sessionId) as models.Session;
+    if (result instanceof Error) {
+      throw result;
+    }
 
-    // @todo add session getting logic
-
-    const session: models.Session = {
-      serviceId: '',
-      userId: '',
-      expiryDate: Date.now(),
-      id: '',
-      serviceToken: '',
-    };
-    ctx.body = { data: { session } } as models.GetSessionResponse;
+    ctx.body = { data: { session: result } } as models.GetSessionResponse;
     ctx.status = status.OK;
     await next();
   } catch (err) {

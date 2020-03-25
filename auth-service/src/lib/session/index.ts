@@ -1,23 +1,35 @@
 import { RedisService } from '../redis';
-import { BaseSessionService } from '../baseServices';
+import { BaseSessionToolkit } from '../baseServices';
 
-export class SessionService extends BaseSessionService {
-  constructor(private redisService: RedisService) {
+export class SessionToolkit extends BaseSessionToolkit {
+  constructor(protected redisService: RedisService) {
     super();
   }
 
-  public async createSession(userId: string, value: string): Promise<void> {
-    this.redisService.setValue(`${this.sessionPrefix}${userId}`, value);
+  public async createSession(sessionId, value: string): Promise<any> {
+    this.redisService.setValue(sessionId, value);
   }
 
-  public async getSession(userId: string): Promise<any> {
-    return this.redisService.getValue(`${this.sessionPrefix}${userId}`);
+  public async getSession(sessionId: string): Promise<any> {
+    return this.redisService.getValue(sessionId);
   }
 
-  public async destroySession(userId: string): Promise<void> {
-    this.redisService.delValue(`${this.sessionPrefix}${userId}`);
+  public async destroySession(sessionId: string): Promise<any> {
+    this.redisService.delValue(sessionId);
+  }
+
+  public composeKey(data: SessionData): string {
+    return `${this.sessionPrefix}:${data.userId}:${data.serviceId}`;
+  }
+
+  public decomposeKey(id: string): SessionData {
+    const [_prefix, userId, serviceId] = id.split(':');
+    return {
+      serviceId,
+      userId,
+    };
   }
 }
 
-export const getSessionService = (redisService: RedisService) =>
-  new SessionService(redisService);
+export const getSessionToolkit = (redisService: RedisService) =>
+  new SessionToolkit(redisService);
