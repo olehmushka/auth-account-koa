@@ -1,29 +1,30 @@
 import { Context, Next, Middleware } from 'koa';
+import { AuthUserService } from '../auth.user.service';
 import { BaseSessionToolkit } from '../../lib/baseServices';
 import { getErrorResponse } from '../../lib/validation';
 import { API as models } from '../../models/models';
 import { status } from '../../utils';
 
-export const getPostSessionHandler = (sessionService: BaseSessionToolkit): Middleware => async (
-  ctx: Context,
-  next: Next,
-) => {
+export const getPostSessionHandler = (
+  authUserService: AuthUserService,
+  sessionService: BaseSessionToolkit,
+): Middleware => async (ctx: Context, next: Next) => {
   try {
-    const { serviceId, userId } = ctx.request.body
-      .data as models.PostSessionData;
+    const { serviceId } = ctx.request.body.data as models.PostSessionData;
 
-      // await sessionService.createSession();
-      // createSession(data: SessionData | string, token: string)
+    const serviceToken = await authUserService.createAuthToken({
+      id: ctx.state.useId,
+      role: ctx.state.role,
+    });
+    const session = await sessionService.createSession(
+      sessionService.composeKey({ serviceId, userId: ctx.state.userId }),
+      serviceToken,
+    );
 
-    // @todo add session creation logic
+    if (session instanceof Error) {
+      throw session;
+    }
 
-    const session: models.Session = {
-      serviceId,
-      userId,
-      expiryDate: Date.now(),
-      id: '',
-      serviceToken: '',
-    };
     ctx.body = { data: { session } } as models.PostSessionResponse;
     ctx.status = status.OK;
     await next();

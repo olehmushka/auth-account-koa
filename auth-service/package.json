@@ -4,8 +4,9 @@
   "main": "src/main.js",
   "scripts": {
     "lint": "yarn format:ts && yarn lint:ts",
-    "lint:ts": "tslint --force --format verbose \"src/**/*.ts\"",
+    "lint:ts": "tslint --force --format verbose \"src/**/*.ts\" --project tsconfig.json",
     "format:ts": "npx prettier --write \"src/**/*.ts\"",
+
     "build": "yarn clean && yarn build:ts",
     "build:ts": "echo Using TypeScript && tsc --version && tsc --pretty && yarn crypto:copy-rs256-key-to-dist",
     "clean": "rimraf dist",
@@ -20,15 +21,18 @@
     "serve:pm2": "npx pm2 start pm2.yml",
     "stop": "npx pm2 stop all",
     "watch": "yarn build -- --watch",
+
     "generate:spec": "yarn clean:swagger2 && yarn generate:swagger2 && yarn clean:models && yarn generate:models && yarn clean:swagger2",
     "generate:models": "npx @manifoldco/swagger-to-ts k8s/swagger2.yml --wrapper \"export namespace API\" --camelcase -o src/models/models.d.ts",
     "clean:models": "rimraf src/models/models.d.ts",
     "generate:swagger2": "api-spec-converter --from=openapi_3 --to=swagger_2 --syntax=yaml --order=alpha k8s/openapi.yml > k8s/swagger2.yml",
     "clean:swagger2": "rimraf k8s/swagger2.yml",
+
     "db:create-migration": "npx bash ./scripts/make_migration.sh",
     "db:run-migration": "npx bash ./scripts/run_migration.sh",
     "db:create-seed": "npx bash ./scripts/make_seed.sh",
     "db:run-seed": "npx bash ./scripts/run_seed.sh",
+
     "test": "npx jest",
     "coverage": "npx jest --coverage"
   },

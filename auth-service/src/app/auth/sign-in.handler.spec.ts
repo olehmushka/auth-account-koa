@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import { getSignInHandler } from './sign-in.handler';
-import { getAuthUserService } from './auth.user.service';
+import { getAuthUserService } from '../auth.user.service';
 import { MockPgService } from '../../lib/mocks/mock-pg';
 import { MockSessionService } from '../../lib/mocks/mock-session';
 import { hashString } from '../../lib/crypto';
@@ -73,14 +73,14 @@ describe('app/auth/sign-in.handler', () => {
         const sessionErr = tt.sessionErrMsg
           ? new Error(tt.sessionErrMsg)
           : undefined;
-        const service = getAuthUserService(
-          new MockPgService(pgErr, tt.pgData),
+        const service = getAuthUserService(new MockPgService(pgErr, tt.pgData));
+        const handler = getSignInHandler(
+          service,
           new MockSessionService(sessionErr),
         );
-        const handler = getSignInHandler(service);
 
         const ctx = {
-          request: { body: { username: '', password: originalPassword } },
+          request: { body: { data: { username: '', password: originalPassword } } },
         } as Context;
         await handler(ctx, async () => {});
         if (tt.expectedBody) {

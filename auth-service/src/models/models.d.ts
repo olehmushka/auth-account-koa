@@ -12,6 +12,9 @@ export namespace API {
     user: SafeUser;
   }
   export interface SignUpUser {
+    data: SignUpUserData;
+  }
+  export interface SignUpUserData {
     email: string;
     firstName: string;
     lastName: string;
@@ -27,6 +30,9 @@ export namespace API {
     user: SafeUser;
   }
   export interface SignInUser {
+    data: SignInUserData;
+  }
+  export interface SignInUserData {
     password: string;
     username: string;
   }
@@ -56,7 +62,6 @@ export namespace API {
   }
   export interface PostSessionData {
     serviceId: string;
-    userId: string;
   }
   export interface GetUsersResponse {
     data: GetUsersResponseData;

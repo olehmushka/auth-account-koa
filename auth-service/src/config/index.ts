@@ -1,15 +1,15 @@
 export const PORT: number = process.env.AUTH_PORT
   ? Number(process.env.AUTH_PORT)
   : 0;
-
+// DB config
 export const DB_URL: string = process.env.DATABASE_URL || '';
 export const MAX_NUMBER_OF_CLIENTS_IN_DB_POOL = 10;
-export const IDLE_TIMOUT_MILLIS_IN_DB = 30000;
-
+export const IDLE_TIMEOUT_MILLIS_IN_DB = 30000;
+// Redis config
 export const REDIS_HOST: string = process.env.REDIS_HOST || '';
-
 // Services IDs
 export const AUTH_SERVICE_ID: string = process.env.AUTH_SERVICE_ID || '';
+// Sessions config
 export const AUTH_SESSION_LIFETIME: number  = process.env.AUTH_SESSION_LIFETIME
   ? Number(process.env.AUTH_SESSION_LIFETIME)
   : 0;

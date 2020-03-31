@@ -5,21 +5,37 @@ import { getSessionsRouter } from './sessions';
 import { getAuthUserMiddleware } from './auth.user.middleware';
 import { getAuthUserService } from './auth.user.service';
 import { getSessionService } from './session.service';
+import { getInitMiddleware } from './init.middleware';
 import { BasePgService } from '../lib/baseServices';
 import { RedisService } from '../lib/redis';
 
 const getApp = (dbClient: BasePgService, redisClient: RedisService) =>
   new Router()
-    .use('/api/auth', getAuthRouter(dbClient, getSessionService(redisClient)).routes())
+    .use(
+      '/api/auth',
+      getInitMiddleware(),
+      getAuthRouter(dbClient, getSessionService(redisClient)).routes(),
+    )
     .use(
       '/api/auth/users',
-      getAuthUserMiddleware(getAuthUserService(), getSessionService(redisClient)),
+      getInitMiddleware(),
+      getAuthUserMiddleware(
+        getAuthUserService(dbClient),
+        getSessionService(redisClient),
+      ),
       getUsersRouter(dbClient).routes(),
     )
     .use(
       '/api/auth/sessions',
-      getAuthUserMiddleware(getAuthUserService(), getSessionService(redisClient)),
-      getSessionsRouter(getSessionService(redisClient)).routes(),
+      getInitMiddleware(),
+      getAuthUserMiddleware(
+        getAuthUserService(dbClient),
+        getSessionService(redisClient),
+      ),
+      getSessionsRouter(
+        getAuthUserService(dbClient),
+        getSessionService(redisClient),
+      ).routes(),
     );
 
 export { getApp };

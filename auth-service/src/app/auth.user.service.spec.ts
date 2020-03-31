@@ -1,21 +1,18 @@
 import { getAuthUserService, AuthUserService } from './auth.user.service';
-import { MockPgService } from '../../lib/mocks/mock-pg';
-import { MockSessionService } from '../../lib/mocks/mock-session';
-import { invalidUsernameErr, invalidPasswordErr } from './common';
-import { hashString } from '../../lib/crypto';
-import { _ } from '../../utils';
+import { MockPgService } from '../lib/mocks/mock-pg';
+import { MockSessionService } from '../lib/mocks/mock-session';
+import { invalidUsernameErr, invalidPasswordErr } from './auth/common';
+import { hashString } from '../lib/crypto';
+import { _ } from '../utils';
 
-describe('app/auth/auth.user.service/getAuthUserService', () => {
+describe('app/auth.user.service/getAuthUserService', () => {
   it('Should create instance of AuthUserService class', () => {
-    const service = getAuthUserService(
-      new MockPgService(),
-      new MockSessionService(),
-    );
+    const service = getAuthUserService(new MockPgService());
     expect(service).toBeInstanceOf(AuthUserService);
   });
 });
 
-describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
+describe('app/auth.user.service/AuthUserService/authenticateUser', () => {
   const originalPassword = '';
   const user = { password: originalPassword };
   beforeAll(async () => {
@@ -58,7 +55,6 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
           : undefined;
         const service = getAuthUserService(
           new MockPgService(expectedErr, tt.pgData),
-          new MockSessionService(),
         );
         const credentials = { username: '', password: originalPassword };
         if (tt.expectedErrMsg) {
@@ -75,13 +71,10 @@ describe('app/auth/auth.user.service/AuthUserService/authenticateUser', () => {
   );
 });
 
-describe('app/auth/auth.user.service/AuthUserService/createAuthToken', () => {
+describe('app/auth.user.service/AuthUserService/createAuthToken', () => {
   it('Should catch session error', async () => {
     const expectedErrMsg = 'mockErr';
-    getAuthUserService(
-      new MockPgService(),
-      new MockSessionService(new Error(expectedErrMsg)),
-    )
+    getAuthUserService(new MockPgService())
       .createAuthToken({ id: '', role: '' })
       .catch(e => {
         expect(e).toEqual(expectedErrMsg);

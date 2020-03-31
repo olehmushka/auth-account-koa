@@ -10,7 +10,7 @@ export class StoreUserService extends BaseUser {
     super();
   }
 
-  public async store(user: models.SignUpUser): Promise<models.SafeUser> {
+  public async store(user: models.SignUpUserData): Promise<models.SafeUser> {
     try {
       user.password = await hashString(user.password);
       const fullUser = { id: uuid.v4(), ...user };

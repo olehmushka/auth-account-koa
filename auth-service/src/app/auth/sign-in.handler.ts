@@ -1,18 +1,32 @@
 import { Context, Next, Middleware } from 'koa';
-import { AuthUserService } from './auth.user.service';
+import { AuthUserService } from '../auth.user.service';
+import { BaseSessionToolkit } from '../../lib/baseServices';
 import { getErrorResponse } from '../../lib/validation';
 import { API as models } from '../../models/models';
 import { status, _ } from '../../utils';
 import { invalidUsernameErr, invalidPasswordErr } from './common';
+import { AUTH_SERVICE_ID } from '../../config';
 
 export const getSignInHandler = (
-  authService: AuthUserService,
+  authUserService: AuthUserService,
+  sessionService: BaseSessionToolkit,
 ): Middleware => async (ctx: Context, next: Next): Promise<void> => {
   try {
-    const credentials = ctx.request.body as models.SignInUser;
-    const user = await authService.authenticateUser(credentials);
-    const authToken = await authService.createAuthToken(user);
-    const session = await authService.createSession(user.id, authToken);
+    const credentials = ctx.request.body.data as models.SignInUserData;
+    const user = await authUserService.authenticateUser(credentials);
+    const authToken = await authUserService.createAuthToken(user);
+
+    const session = await sessionService.createSession(
+      sessionService.composeKey({
+        userId: user.id,
+        serviceId: AUTH_SERVICE_ID,
+      }),
+      authToken,
+    );
+    if (session instanceof Error) {
+      throw session;
+    }
+
     ctx.body = {
       data: {
         session,

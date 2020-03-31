@@ -19,7 +19,12 @@ export const getAuthUserMiddleware = (
 
     const token = authorization.slice('Bearer '.length, authorization.length);
     const data = await authUserService.verifyAuthToken(token);
-    const isSessionExpired = await sessionService.isExpired({ userId: data.userId, serviceId: AUTH_SERVICE_ID });
+    ctx.state.userId = data.userId;
+    ctx.state.role = data.role;
+    const isSessionExpired = await sessionService.isExpired({
+      userId: data.userId,
+      serviceId: AUTH_SERVICE_ID,
+    });
     if (isSessionExpired) {
       ctx.throw(status.extra.iis.LOGIN_TIME_OUT, {
         message: sessionIsExpired,

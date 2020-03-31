@@ -3,10 +3,9 @@ import { BaseSessionToolkit } from '../../lib/baseServices';
 import { getErrorResponse } from '../../lib/validation';
 import { status } from '../../utils';
 
-export const getDeleteSessionHandler = (sessionService: BaseSessionToolkit): Middleware => async (
-  ctx: Context,
-  next: Next,
-) => {
+export const getDeleteSessionHandler = (
+  sessionService: BaseSessionToolkit,
+): Middleware => async (ctx: Context, next: Next) => {
   try {
     const result = await sessionService.destroySession(ctx.params.sessionId);
     if (result instanceof Error) {

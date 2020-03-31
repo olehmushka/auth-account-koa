@@ -258,25 +258,29 @@ components:
 
     SignUpUser:
       required:
-      - username
-      - email
-      - firstName
-      - lastName
-      - password
-      - role
+      - data
       properties:
-        username:
-          type: string
-        email:
-          "$ref": "#/components/schemas/UserEmail"
-        firstName:
-          type: string
-        lastName:
-          type: string
-        password:
-          "$ref": "#/components/schemas/UserPassword"
-        role:
-          "$ref": "#/components/schemas/UserRole"
+        data:
+          required:
+          - username
+          - email
+          - firstName
+          - lastName
+          - password
+          - role
+          properties:
+            username:
+              type: string
+            email:
+              "$ref": "#/components/schemas/UserEmail"
+            firstName:
+              type: string
+            lastName:
+              type: string
+            password:
+              "$ref": "#/components/schemas/UserPassword"
+            role:
+              "$ref": "#/components/schemas/UserRole"
     SignUpUserResponse:
       required:
       - data
@@ -293,13 +297,17 @@ components:
 
     SignInUser:
       required:
-      - username
-      - password
+      - data
       properties:
-        username:
-          type: string
-        password:
-          "$ref": "#/components/schemas/UserPassword"
+        data:
+          required:
+          - username
+          - password
+          properties:
+            username:
+              type: string
+            password:
+              "$ref": "#/components/schemas/UserPassword"
     SignInUserResponse:
       required:
       - data
@@ -352,11 +360,8 @@ components:
       properties:
         data:
           required:
-          - userId
           - serviceId
           properties:
-            userId:
-              "$ref": "#/components/schemas/UserId"
             serviceId:
               type: string
               format: uuid
