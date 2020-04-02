@@ -34,6 +34,18 @@ services:
     expose:
       - 3000
 
+  finance-management-service:
+    container_name: finance-management-service
+    build:
+      context: ./finance-management-service
+      dockerfile: Dockerfile
+    depends_on:
+      - db-service
+    env_file:
+      - ./.env
+    expose:
+      - 3000
+
   frontend:
     container_name: frontend
     build:

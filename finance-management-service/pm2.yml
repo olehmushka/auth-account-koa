@@ -1,0 +1,7 @@
+apps:
+  - script: ./dist/main.js
+    name: finance-management-service-auth-account-koa
+    exec_mode: cluster
+    instances: max
+    env: 
+      NODE_ENV: production
