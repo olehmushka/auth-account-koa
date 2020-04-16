@@ -1,5 +1,5 @@
 {
-  "name": "finance-management-service",
+  "name": "finance-management-service-auth-account-koa",
   "version": "1.0.0",
   "main": "src/main.js",
   "scripts": {

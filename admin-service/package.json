@@ -1,0 +1,62 @@
+{
+  "name": "admin-service-auth-account-koa",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "scripts": {
+    "lint": "yarn format:ts && yarn lint:ts",
+    "lint:ts": "tslint --force --format verbose \"src/**/*.ts\" --project tsconfig.json",
+    "format:ts": "npx prettier --write \"src/**/*.ts\"",
+    "build": "yarn clean && yarn build:ts",
+    "build:ts": "echo Using TypeScript && tsc --version && tsc --pretty",
+    "clean": "rimraf dist",
+    "start": "yarn lint && yarn build && yarn serve",
+    "serve": "node ./dist/main.js",
+    "start:dev": "yarn lint && yarn build && yarn serve:dev",
+    "serve:dev": "npx nodemon --inspect ./dist/main.js",
+    "watch": "yarn build -- --watch",
+    "test": "npx jest",
+    "coverage": "npx jest --coverage",
+    "gen:ssl-cert": "npx bash scripts/gen-ssl-cert.sh"
+  },
+  "author": "Oleh Mushka<olegamysk@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/cookie-parser": "^1.4.1",
+    "@types/express": "^4.11.0",
+    "@types/jest": "^25.1.4",
+    "@types/morgan": "^1.9.0",
+    "@types/node": "^9.3.0",
+    "jest": "^25.1.0",
+    "supertest": "^4.0.2",
+    "ts-jest": "^25.2.1",
+    "tslint-config-prettier": "^1.18.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^3.0.2",
+    "express": "^4.16.3",
+    "geoip-lite": "^1.4.1",
+    "morgan": "^1.10.0",
+    "node-where": "^1.1.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.0.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "./coverage"
+  }
+}

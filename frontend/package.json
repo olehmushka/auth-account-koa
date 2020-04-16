@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "frontend-auth-account-koa",
   "version": "0.1.0",
   "scripts": {
     "start": "react-scripts start",

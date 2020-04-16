@@ -22,6 +22,18 @@ services:
     logging:
       driver: none
 
+  admin-service:
+    container_name: admin-service
+    build:
+      context: ./admin-service
+      dockerfile: Dockerfile
+    depends_on:
+      - db-service
+    env_file:
+      - ./.env
+    expose:
+      - 3000
+
   auth-service:
     container_name: auth-service
     build:
