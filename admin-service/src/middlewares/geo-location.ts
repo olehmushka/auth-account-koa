@@ -9,5 +9,6 @@ export const getGeoLocation = async (req, res, next) => {
 
   const geo = await geoip.lookup(ip);
   req.where = geo;
+  console.log(geo);
   next();
 };
