@@ -65,7 +65,7 @@
   "dependencies": {
     "@manifoldco/swagger-to-ts": "^1.7.0",
     "api-spec-converter": "^2.11.0",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.11",
