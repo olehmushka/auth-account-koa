@@ -67,7 +67,7 @@
     "api-spec-converter": "^2.11.0",
     "bcrypt": "^4.0.1",
     "http-status": "^1.4.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.20.11",
     "koa": "2.11.0",
     "koa-body": "^4.1.1",
