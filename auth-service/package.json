@@ -68,7 +68,7 @@
     "bcrypt": "^4.0.1",
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.20.11",
+    "knex": "^2.4.0",
     "koa": "2.11.0",
     "koa-body": "^4.1.1",
     "koa-bodyparser": "^4.2.1",
