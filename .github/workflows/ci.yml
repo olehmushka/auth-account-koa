@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  vulnerability-scan:
+    name: Vulnerability scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit admin-service
+        working-directory: admin-service
+        run: yarn audit
+        continue-on-error: true
+
+      - name: Audit auth-service
+        working-directory: auth-service
+        run: yarn audit
+        continue-on-error: true
+
+      - name: Audit finance-management-service
+        working-directory: finance-management-service
+        run: yarn audit
+        continue-on-error: true
+
+      - name: Audit frontend
+        working-directory: frontend
+        run: yarn audit
+        continue-on-error: true
