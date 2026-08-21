@@ -16,7 +16,7 @@
     "watch": "yarn build -- --watch",
     "test": "npx jest",
     "coverage": "npx jest --coverage",
-    "gen:ssl-cert": "npx bash scripts/gen-ssl-cert.sh"
+    "gen:ssl-cert": "bash scripts/gen-ssl-cert.sh"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
