@@ -59,6 +59,7 @@
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true, /* Disallow inconsistently-cased references to the same file. */
+    "skipLibCheck": true, /* Skip type checking of declaration files (.d.ts) shipped by third-party packages; several old deps (knex@0.20, @types/express-serve-static-core) ship .d.ts that don't compile under TS 5.9's stricter generic-constraint and lib.dom/node checks. */
     "types": ["jest", "node"]
   },
   "include": [

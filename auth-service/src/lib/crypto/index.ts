@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { getErrorMessage } from '../../utils/error';
 
 const SALT_ROUND = 10;
 const PRIVATE_KEY_FILENAME = 'jwtRS256.key';
@@ -51,8 +52,8 @@ export const sign = async (data: string): Promise<string> => {
   try {
     const privateKey = await getFile(PRIVATE_KEY_FILENAME);
     return jwt.sign(data, privateKey, { algorithm: HASH_ALGORITHM });
-  } catch ({ message }) {
-    throw new Error(message);
+  } catch (err) {
+    throw new Error(getErrorMessage(err));
   }
 };
 
@@ -62,7 +63,7 @@ export const verify = async (token: string): Promise<string> => {
     return jwt.verify(token, publicKey, {
       algorithms: [HASH_ALGORITHM],
     }) as string;
-  } catch ({ message }) {
-    throw new Error(message);
+  } catch (err) {
+    throw new Error(getErrorMessage(err));
   }
 };

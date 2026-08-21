@@ -7,8 +7,14 @@ import { TYPES } from '../services/types';
 
 @controller('/auth')
 export class AuthController {
-  constructor(@inject(TYPES.TokenService) private _tokenService: TokenService) {
-  }
+  constructor(
+    // inversify@4's `inject.d.ts` narrows the parameter-decorator `targetKey`
+    // argument to `string`, but TS's real ParameterDecorator contract passes
+    // `undefined` for constructor parameters; this is only a stale vendor
+    // typing gap (inversify itself ignores that argument at runtime here).
+    // @ts-expect-error
+    @inject(TYPES.TokenService) private _tokenService: TokenService,
+  ) {}
 
   @httpPost('/sign-in')
   public signIn(req: SignInRequest, res: Response, next: NextFunction) {

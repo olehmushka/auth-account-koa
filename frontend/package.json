@@ -2,16 +2,24 @@
   "name": "frontend-auth-account-koa",
   "version": "0.1.0",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
-    "test:c": "react-scripts test",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "test": "NODE_OPTIONS=--openssl-legacy-provider react-scripts test --watchAll=false",
+    "test:c": "NODE_OPTIONS=--openssl-legacy-provider react-scripts test",
     "lint": "eslint src/*/**/*.{ts,tsx}",
     "eject": "react-scripts eject"
   },
   "author": "Oleh Mushka<olegamysk@gmail.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "resolutions": {
+    "@types/react": "^16.14.70",
+    "@types/react-dom": "^16.9.25",
+    "tslib": "^2.6.0"
+  },
   "lint-staged": {
     "*/**/*.{tsx,ts,scss,json}": [
       "prettier --write",
@@ -39,7 +47,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "moment": "^2.24.0",
-    "node-sass": "^4.13.1",
+    "sass": "^1.77.8",
     "react": "^16.13.1",
     "react-datepicker": "^2.14.0",
     "react-dom": "^16.13.1",
@@ -50,7 +58,8 @@
     "recompose": "^0.30.0",
     "simple-line-icons": "^2.4.1",
     "spinkit": "1.2.5",
-    "typescript": "3.7.2",
+    "tslib": "^2.6.0",
+    "typescript": "5.9.3",
     "yup": "^0.28.3"
   },
   "eslintConfig": {
@@ -73,7 +82,7 @@
     "@types/jest": "^25.1.4",
     "@types/lodash": "^4.14.149",
     "@types/moment": "^2.13.0",
-    "@types/node": "^13.9.2",
+    "@types/node": "^24.0.0",
     "@types/react": "^16.9.25",
     "@types/react-datepicker": "^2.11.0",
     "@types/react-dom": "^16.9.5",

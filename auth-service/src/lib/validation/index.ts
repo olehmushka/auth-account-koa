@@ -2,7 +2,7 @@ import { Context, Next, Middleware } from 'koa';
 import { oas } from 'koa-oas3';
 import compose from 'koa-compose';
 import { API } from '../../models/models';
-import { _ } from '../../utils';
+import { _, isErrorWithMessage } from '../../utils';
 
 interface Suggestion {
   error: string;
@@ -16,11 +16,11 @@ interface ValidationError {
 }
 
 export const getErrorResponse = (
-  err: { message: string } | string,
+  err: unknown,
   messages?: string[],
 ): API.Error => {
   const res = {
-    message: _.get(err, 'message', err),
+    message: isErrorWithMessage(err) ? err.message : err,
     errors: [],
   } as API.Error;
 
@@ -32,7 +32,12 @@ export const getErrorResponse = (
 };
 
 export const validate = (openApiPath: string): Middleware =>
-  compose([
+  // `koa-compose`, `koa-oas3` and `koa` each declare their own, slightly
+  // incompatible generic flavors of `Middleware`/`Context`, so the composed
+  // result can't be structurally proven to satisfy the plain `Middleware`
+  // type here even though it is one at runtime. Asserting is safe: both
+  // middlewares below only rely on the standard koa `Context`/`Next`.
+  (compose([
     async (ctx: Context, next: Next): Promise<void> => {
       try {
         await next();
@@ -50,4 +55,4 @@ export const validate = (openApiPath: string): Middleware =>
       endpoint: '/openapi.json',
       uiEndpoint: '/',
     }),
-  ]);
+  ]) as unknown) as Middleware;

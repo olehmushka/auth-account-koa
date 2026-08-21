@@ -13,7 +13,7 @@ export const getSignUpHandler = (
   sessionService: BaseSessionToolkit,
 ): Middleware => async (ctx: Context, next: Next): Promise<void> => {
   try {
-    const user = ctx.request.body.data as models.SignUpUserData;
+    const user = (ctx.request.body as { data: models.SignUpUserData }).data;
     const savedUser = await storeService.store(user);
     const authToken = await authUserService.createAuthToken(savedUser);
 

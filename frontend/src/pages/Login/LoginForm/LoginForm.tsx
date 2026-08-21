@@ -45,7 +45,7 @@ const FormLayout: FC<InjectedFormikProps<IFormProps, ISignInData>> = ({
         <LoaderButton
           text="Sign In"
           isLoading={isSubmitting}
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
           type="submit"
         />
       </Form>

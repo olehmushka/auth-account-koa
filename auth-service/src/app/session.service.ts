@@ -1,7 +1,7 @@
 import { SessionToolkit } from '../lib/session';
 import { RedisService } from '../lib/redis';
 import { API as models } from '../models/models';
-import { _ } from '../utils';
+import { _, getErrorMessage } from '../utils';
 import { sessionWasNotFound } from './common';
 import { AUTH_SERVICE_ID, AUTH_SESSION_LIFETIME } from '../config';
 
@@ -36,8 +36,8 @@ export class SessionService extends SessionToolkit {
       }
       await super.createSession(session.id, JSON.stringify(session));
       return session;
-    } catch ({ message }) {
-      return new Error(message);
+    } catch (err) {
+      return new Error(getErrorMessage(err));
     }
   }
 
@@ -57,8 +57,8 @@ export class SessionService extends SessionToolkit {
         return new Error(`session in ${parsed.serviceId} was expired`);
       }
       return parsed;
-    } catch ({ message }) {
-      return new Error(message);
+    } catch (err) {
+      return new Error(getErrorMessage(err));
     }
   }
 
@@ -69,8 +69,8 @@ export class SessionService extends SessionToolkit {
       typeof data === 'string'
         ? await super.destroySession(data)
         : await super.destroySession(super.composeKey(data));
-    } catch ({ message }) {
-      return new Error(message);
+    } catch (err) {
+      return new Error(getErrorMessage(err));
     }
   }
 

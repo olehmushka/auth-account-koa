@@ -1,7 +1,7 @@
 import { API as models } from '../models/models';
 import { compareWithHash, sign, verify } from '../lib/crypto';
 import { BasePgService, BaseUser } from '../lib/baseServices';
-import { _ } from '../utils';
+import { _, isErrorWithMessage } from '../utils';
 import { invalidPasswordErr, invalidUsernameErr } from './auth/common';
 
 interface TokenData {
@@ -35,7 +35,9 @@ export class AuthUserService extends BaseUser {
       }
       throw new Error(invalidPasswordErr);
     } catch (err) {
-      return err.message ? Promise.reject(err.message) : Promise.reject(err);
+      return isErrorWithMessage(err)
+        ? Promise.reject(err.message)
+        : Promise.reject(err);
     }
   }
 
@@ -51,7 +53,9 @@ export class AuthUserService extends BaseUser {
       const token = await sign(JSON.stringify(dataForToken));
       return token;
     } catch (err) {
-      return err.message ? Promise.reject(err.message) : Promise.reject(err);
+      return isErrorWithMessage(err)
+        ? Promise.reject(err.message)
+        : Promise.reject(err);
     }
   }
 
@@ -62,7 +66,9 @@ export class AuthUserService extends BaseUser {
         ? (JSON.parse(data) as TokenData)
         : (data as TokenData);
     } catch (err) {
-      return err.message ? Promise.reject(err.message) : Promise.reject(err);
+      return isErrorWithMessage(err)
+        ? Promise.reject(err.message)
+        : Promise.reject(err);
     }
   }
 }

@@ -13,7 +13,7 @@ export const getAuthUserMiddleware = (
 ): Middleware => async (ctx: Context, next: Next): Promise<void> => {
   try {
     const authorization = ctx.header.authorization;
-    if (!BEARER_REGEX.test(authorization)) {
+    if (!authorization || !BEARER_REGEX.test(authorization)) {
       throw new Error('Incorrect Bearer format');
     }
 

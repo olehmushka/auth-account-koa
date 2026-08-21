@@ -1,7 +1,7 @@
 import { API as models } from '../../models/models';
 import { hashString } from '../../lib/crypto';
 import { BaseUser, BasePgService } from '../../lib/baseServices';
-import { converter, uuid, _ } from '../../utils';
+import { converter, uuid, _, isErrorWithMessage } from '../../utils';
 
 export class StoreUserService extends BaseUser {
   private tableName = 'users';
@@ -21,7 +21,9 @@ export class StoreUserService extends BaseUser {
 
       return this.filterFullUser(fullUser, ['password']);
     } catch (err) {
-      return err.message ? Promise.reject(err.message) : Promise.reject(err);
+      return isErrorWithMessage(err)
+        ? Promise.reject(err.message)
+        : Promise.reject(err);
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Context, Next, Middleware } from 'koa';
 import { getErrorResponse } from '../../lib/validation';
 import { API as models } from '../../models/models';
-import { status } from '../../utils';
+import { status, converter } from '../../utils';
 import { GetUserService } from './get.user.service';
 
 export const getGetAllUsersHandler = (
@@ -10,8 +10,8 @@ export const getGetAllUsersHandler = (
   try {
     const { limit, skip } = ctx.request.query;
     const users = (await getUserService.getSaveBalk(
-      limit,
-      skip,
+      converter.queryParamToNumber(limit),
+      converter.queryParamToNumber(skip),
     )) as models.SafeUser[];
     ctx.body = { data: { users } } as models.GetUsersResponse;
     ctx.status = status.OK;

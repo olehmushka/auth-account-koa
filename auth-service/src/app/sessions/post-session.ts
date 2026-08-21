@@ -10,7 +10,9 @@ export const getPostSessionHandler = (
   sessionService: BaseSessionToolkit,
 ): Middleware => async (ctx: Context, next: Next) => {
   try {
-    const { serviceId } = ctx.request.body.data as models.PostSessionData;
+    const { serviceId } = (ctx.request.body as {
+      data: models.PostSessionData;
+    }).data;
 
     const serviceToken = await authUserService.createAuthToken({
       id: ctx.state.useId,

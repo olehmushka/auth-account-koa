@@ -28,3 +28,16 @@ export const camelCasePropertiesToSnakeCase = (
 export const snakeCasePropertiesToCamelCase = (
   snakeCaseObj: Object | any,
 ): Object => objectPropertiesConvertCase(snakeCaseObj, snakeToCamelCase);
+
+// Koa's `ctx.request.query` values are typed as `string | string[] | undefined`;
+// this normalizes a single query param into a `number` for handlers that expect one.
+export const queryParamToNumber = (
+  value: string | string[] | undefined,
+): number | undefined => {
+  const rawValue = Array.isArray(value) ? value[0] : value;
+  if (rawValue === undefined) {
+    return undefined;
+  }
+  const parsed = Number(rawValue);
+  return Number.isNaN(parsed) ? undefined : parsed;
+};

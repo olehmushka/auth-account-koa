@@ -12,7 +12,8 @@ export const getSignInHandler = (
   sessionService: BaseSessionToolkit,
 ): Middleware => async (ctx: Context, next: Next): Promise<void> => {
   try {
-    const credentials = ctx.request.body.data as models.SignInUserData;
+    const credentials = (ctx.request.body as { data: models.SignInUserData })
+      .data;
     const user = await authUserService.authenticateUser(credentials);
     const authToken = await authUserService.createAuthToken(user);
 
@@ -38,7 +39,9 @@ export const getSignInHandler = (
   } catch (err) {
     ctx.body = getErrorResponse(err);
     switch (true) {
-      case [invalidUsernameErr, invalidPasswordErr].includes(err):
+      case (
+        [invalidUsernameErr, invalidPasswordErr] as unknown[]
+      ).includes(err):
         ctx.status = status.FORBIDDEN;
         break;
       default:
