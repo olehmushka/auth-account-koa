@@ -1,5 +1,9 @@
 # Auth Account Koa
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Node.js](https://img.shields.io/badge/Node.js-Koa-brightgreen.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-3.8-blue.svg)
+
 The mock project with examples of usage different instruments of development.
 
 ## Run the project
